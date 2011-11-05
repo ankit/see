@@ -1,0 +1,247 @@
+624,document,"CIA_16,FBI_08,DIA_03,FBI_36,FBI_34,FBI_31,",place,"Windsor,Ontario,Canada,Detroit,Michigan,",0.03836470463186067000
+625,document,"CIA_16,FBI_08,DIA_03,FBI_36,FBI_34,",place,"USA,Windsor,Ontario,Canada,Detroit,Michigan,",0.06891904053658246000
+626,date,"2 January, 2004,1990,1993,2001,3 November, 2003,27 November, 2003,1970,1965,",organization,"FBI,University of Missouri,Rutgers University,American University in Beirut,Western Union,",0.02562980127630071600
+627,date,"15 December, 2003,5 March, 2004,1997,23 October, 2003,25 October, 2003,15 May, 2004,20 May, 2004,",organization,"FBI,DIA,BailOut,Carolina First Bank,Detroit police,",0.01018718766669420700
+628,date,"1998,1994,1964,1999 - 2000,March of 2000,June of 2000,",organization,"MI 6,Al Qaeda,Baker St. mosque,Gulf Shores Bank,Middle Eastern Charities,",0.00298867088993812940
+629,date,"20 November, 2003,1 November, 2003,12 September, 2003,3 November, 2003,July, 2001,10 October, 2003,",organization,"Al Qaeda,AOL,University of Missouri,Hamas,Central Farmers Auto Insurance Co.,Mid States Insurance Company,Columbia First State Bank,Mid States,Central Farmers,",0.00560854937993654700
+630,date,"20 November, 2003,1 November, 2003,2 January, 2004,12 September, 2003,1990,1993,2001,3 November, 2003,27 November, 2003,1970,1965,July, 2001,10 October, 2003,",person,"Wali Shakur,Ahmed Doha,Abu Ayyash,Doha,Ayyash,",0.00407621574582479300
+631,date,"1999,2001,1991,13 December, 2004,20 September, 2004,21 November, 2004,19 December, 2004,17 September, 2004,14 September, 2004,29 October, 2004,",person,"Muhammed Dandani,Wali Shakur,Mounir Mzoudi,Hamza al Midhar,Mamoun Zammar,Said Khadr,",0.00189152835743706620
+632,date,"19 - 24 October, 2003,20 - 24 October,21 - 22 October,21 - 25 October,22 - 24 October,19 - 24 October,22 - 23 October,19 -21 October,20 - 23 October,",person,"Yasir Salman,Ali Talib,Abu Adil,Omar al Banna,Nadia Mahfouz,Ali Mishal,Abdel Noufal,Ahmad Miner,Jamat Syeed,Shukri Azzam,Nidal Awad,",0.00000000000000000000
+633,date,"5 March, 2004,1 July, 2003,27 October, 2004,25 October,18 July, 2004,11 October, 2004,20 October, 2004,",person,"Abdul al Nami,Satam Derwish,Derwish,Ronald,Satam,",0.00084339053032278500
+634,date,"2 January, 2004,1990,1993,2001,3 November, 2003,27 November, 2003,1970,1965,",person,"Wali Shakur,Ahmed Doha,Abu Ayyash,Doha,Ayyash,Shakur,",0.00351650426611195550
+635,date,"15 December, 2003,5 March, 2004,1997,23 October, 2003,25 October, 2003,15 May, 2004,20 May, 2004,",person,"Rifai Qasim,Abdul al Nami,Omar Blakely,Muhammed Mustafa,Blakely,Howard Clark,Qasim,Rifai,Clark,",0.00097654426624330190
+636,date,"1999,2001,1991,17 September, 2004,14 September, 2004,29 October, 2004,",person,"Adnan Hijazi,Hijazi,Muhammed Dandani,Wali Shakur,Mounir Mzoudi,Hamza al Midhar,Mamoun Zammar,Said Khadr,HIjazi,Abdul Karim,Karim,",0.02671506863682718000
+637,date,"1998,1999,1996,1993,1993 - 1998,July 17, 1999,",person,"Omar Hanif,Hanif,Jamal al Quso,Omar Mahmoud Othman,Othman,",0.00136520405469944380
+638,date,"20 November, 2003,1 November, 2003,12 September, 2003,3 November, 2003,July, 2001,10 October, 2003,",person,"Wali Shakur,Ahmed Doha,Abu Ayyash,Doha,Ayyash,wshakur,",0.01039417709249270400
+639,organization,"FBI,Al Qaeda,AOL,University of Missouri,Rutgers University,American University in Beirut,Western Union,Hamas,Central Farmers Auto Insurance Co.,Mid States Insurance Company,Columbia First State Bank,Mid States,Central Farmers,",person,"Wali Shakur,Ahmed Doha,Abu Ayyash,Doha,Ayyash,",0.00332948763393987750
+640,organization,"FBI,NSA,DIA,Detroit Utilities Co.,RCMP,Canada Eastern Airlines,",person,"Abdul al Nami,Satam Derwish,Derwish,Ronald,Satam,",0.03265323554461312000
+641,organization,"Al Qaeda,AOL,University of Missouri,Hamas,Central Farmers Auto Insurance Co.,Mid States Insurance Company,Columbia First State Bank,Mid States,Central Farmers,",person,"Wali Shakur,Ahmed Doha,Abu Ayyash,Doha,Ayyash,wshakur,",0.00707829835506571750
+642,organization,"FBI,University of Missouri,Rutgers University,American University in Beirut,Western Union,",person,"Wali Shakur,Ahmed Doha,Abu Ayyash,Doha,Ayyash,Shakur,",0.00587089527937792100
+643,organization,"NSA,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,",person,"R. Derwish,Satam Derwish,Derwish,Ronald,Ronald Derwish,",0.00738642778568532100
+644,organization,"BailOut,Carolina First Bank,Hezbollah,Southern Trailways,First Emirate Bank,",person,"Rifai Qasim,Omar Blakely,Muhammed Mustafa,Blakely,Mustafa,",0.01150663974536463000
+645,organization,"FBI,DIA,BailOut,Carolina First Bank,Detroit police,",person,"Rifai Qasim,Abdul al Nami,Omar Blakely,Muhammed Mustafa,Blakely,Howard Clark,Qasim,Rifai,Clark,",0.00948725268490711700
+646,organization,"FBI,Taliban,Baltimore City College,Islamic Circle of North America,ICNA,",person,"Adnan Hijazi,Hijazi,Mounir Mzoudi,J. T.,A. H.,M. M.,Martha Mason,Mzoudi,",0.01017499328783327500
+647,place,"USA,Cuba,Texas,Houston,Buenos Aires,Argentina,Ojinaga,Mexico,Calamar,Columbia,Chetumal,Cartagena,Guane,Arlington,Presidio,Dallas,Grand Prairie,Mexico City,Ft. Stockton,San Antonio,2727 Robinson Rd.,1212 Pipeline Rd.,Euless,899 Almeda-Genoa Rd.,",date,"May, 2002,26 December, 2003,2 January, 2004,January of 2001,April of 2002,January, 2003,",0.00718735228784782400
+648,place,"USA,New York,Virginia,Florida,New Jersey,455 11th St.,Miami Beach,224 Paulson Ave.,Clifton,2116 27th St.,Laurel,Maryland,1721 Glade Dr,Reston,1641 Pitkin Ave,Brooklyn,1621 Charles Ave.,Potomac,6132 Broward Blvd,Fort Lauderdale,CLifton,",date,"1999,2001,1991,17 September, 2004,14 September, 2004,29 October, 2004,",0.05882060722869894000
+649,place,"USA,New York,Virginia,New Jersey,224 Paulson Ave.,Clifton,Laurel,",date,"1 November, 2003,1999,2001,1991,17 September, 2004,14 September, 2004,29 October, 2004,",0.13967907695753154000
+650,place,"USA,Florida,New Jersey,2116 27th St.,Laurel,Maryland,",date,"1994,1999,2001,1991,17 September, 2004,14 September, 2004,29 October, 2004,",0.05642816219970036000
+651,place,"USA,Florida,New Jersey,455 11th St.,Miami Beach,",date,"1999,2001,1991,1 May, 2003,17 September, 2004,14 September, 2004,29 October, 2004,",0.02552025697512232800
+652,place,"USA,Cuba,Texas,Houston,Mexico,Columbia,Chetumal,Cartagena,Guane,",date,"May, 2002,26 December, 2003,2 January, 2004,January of 2001,April of 2002,January, 2003,1 December, 2004,",0.00512173376234615800
+653,place,"USA,UK,Detroit,Michigan,Laurel,",date,"1 November, 2003,1994,1999,2002,10 August, 2001,",0.89881418739835760000
+654,place,"USA,Windsor,Ontario,Canada,Newark,Detroit,Michigan,",date,"1 November, 2003,1992,1 July, 2003,2002,10 August, 2001,",0.00243862203088368850
+655,place,"USA,Canada,London,UK,Heathrow Airport,",date,"1 November, 2003,12 December, 2002,2002,10 August, 2001,1 May, 2003,",0.01740293358222919400
+656,place,"USA,Bahamas,Nassau,London,UK,Islamabad,Afghanistan,Freeport,11 Apple St.,Chicago,Illinois,Baker St.,London Heathrow,Yemen,",date,"1998,1999,1996,1993,1993 - 1998,July 17, 1999,",0.00701722777890783500
+657,place,"USA,Bahamas,Nassau,London,UK,11 Apple St.,",date,"1998,1999,1996,1993,1993 - 1998,July 17, 1999,1 May, 2003,",0.01593342804720765700
+658,place,"USA,London,UK,Afghanistan,Chicago,Illinois,",date,"1998,1999,1996,1993,16 May, 2003,1993 - 1998,July 17, 1999,",0.01788854993742031500
+659,place,"USA,New York,Florida,Bahamas,Nassau,Freeport,Maryland,",date,"1999,13 December, 2004,20 September, 2004,21 November, 2004,19 December, 2004,",0.03932965364702101000
+660,place,"USA,Florida,Bahamas,Nassau,Freeport,",date,"1998,1999,13 December, 2004,20 September, 2004,21 November, 2004,19 December, 2004,",0.06927303065611336000
+661,place,"USA,Florida,Bahamas,Nassau,Maryland,Baltimore,",date,"1994,13 December, 2004,20 September, 2004,21 November, 2004,19 December, 2004,",0.14725857086592214000
+662,place,"USA,Florida,Bahamas,Nassau,Maryland,",date,"1994,1999,13 December, 2004,20 September, 2004,21 November, 2004,19 December, 2004,",1.00000000000000000000
+663,place,"USA,Cuba,Texas,Houston,Mexico,Columbia,Cartagena,Guane,",date,"May, 2002,26 December, 2003,2 January, 2004,January of 2001,April of 2002,January, 2003,1 December, 2004,3 December, 2004,",0.00660563393559267100
+664,place,"USA,Canada,Paris,France,Afghanistan,",date,"1 November, 2003,2 April, 2003,1 April, 2003,Fall of 2001,1997 - 2000,",0.07086075265080358000
+665,place,"USA,Windsor,Ontario,Canada,Detroit,Michigan,Afghanistan,",date,"1 November, 2003,1997,2002,16 February, 2004,1995,",0.03954318019553020000
+666,place,"USA,Detroit,Michigan,Afghanistan,Maryland,",date,"1997,1994,1999,16 February, 2004,1995,",0.08315059340368171000
+667,place,"USA,Canada,Detroit,Michigan,Afghanistan,",date,"1 November, 2003,1997,12 December, 2002,2002,16 February, 2004,1995,",0.05755258663343553000
+668,place,"USA,Canada,Paris,France,Montreal,",date,"2 April, 2003,1 April, 2003,Fall of 2001,1997 - 2000,17 April, 2003,6 April, 2003,",0.01109701841414278800
+669,place,"USA,Chicago,Illinois,Amsterdam,Netherlands,",date,"25 April, 2003,20 June, 2003,1990s,1974,23 June, 2003,",0.03543494205156674000
+670,place,"USA,Canada,Montreal,Chicago,Illinois,",date,"25 April, 2003,2 April, 2003,1 April, 2003,Fall of 2001,1997 - 2000,",0.01961709553959227800
+671,place,"USA,Cuba,New Jersey,224 Paulson Ave.,Clifton,",date,"2 January, 2004,12 September, 2003,1990,1993,1991,",0.43276413724621815000
+672,place,"USA,Canada,New York,Paris,France,Buffalo,",date,"15 December, 2003,28th,1 November, 2003,2 April, 2003,1 April, 2003,17 April, 2003,6 April, 2003,",0.02024159215110459700
+673,place,"USA,Florida,Bahamas,Nassau,London,UK,",date,"4 February, 2004,5 February,7 February,1998,1999,1 May, 2003,",0.00924835239000714800
+674,place,"USA,Bahamas,Nassau,London,UK,",date,"4 February, 2004,5 February,7 February,1998,1999,1996,1993,1993 - 1998,July 17, 1999,1 May, 2003,",0.01196292771371517500
+675,place,"USA,Canada,London,UK,Detroit,Michigan,Montreal,Toronto,Gizab,Qalat,",date,"12 December, 2002,2000-2001,March 2002,26 November, 2002,1999-2000,23 October, 2000,",0.11920878924146472000
+676,place,"USA,Canada,London,UK,Detroit,Michigan,Toronto,",date,"1 November, 2003,12 December, 2002,2000-2001,March 2002,26 November, 2002,1999-2000,23 October, 2000,",0.71130982766383270000
+677,place,"USA,Canada,London,UK,Montreal,",date,"12 December, 2002,1 May, 2003,2000-2001,March 2002,26 November, 2002,1999-2000,23 October, 2000,",0.00492709338842180500
+678,place,"USA,Canada,London,UK,Detroit,Michigan,",date,"1 November, 2003,12 December, 2002,2002,10 August, 2001,2000-2001,March 2002,26 November, 2002,1999-2000,23 October, 2000,",0.00049582812366717080
+679,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,Detroit,Michigan,",date,"15 December, 2003,5 March, 2004,1992,1 July, 2003,25 October,18 July, 2004,",0.02452424291000842000
+680,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,",date,"15 December, 2003,28th,5 March, 2004,1992,1 July, 2003,25 October,18 July, 2004,",0.09807398325086236000
+681,place,"USA,London,UK,Chicago,Illinois,",date,"1998,1999,1996,1993,16 May, 2003,1993 - 1998,July 17, 1999,July 18, 1999,28 September, 2003,",0.00980815321971361400
+682,place,"USA,London,UK,Detroit,Michigan,Afghanistan,Heathrow Airport,",date,"1 November, 2003,12 December, 2002,15 Feb. 2003,10 February, 2004,16 March, 2004,2002,",0.00085514564007025520
+683,place,"USA,London,UK,Detroit,Michigan,Afghanistan,",date,"1 November, 2003,12 December, 2002,15 Feb. 2003,10 February, 2004,16 March, 2004,1999,1996,2002,",0.00483763552524769100
+684,place,"USA,UK,Detroit,Michigan,Afghanistan,",date,"1 November, 2003,12 December, 2002,15 Feb. 2003,10 February, 2004,16 March, 2004,1994,1999,1996,2002,",0.00196664516616339200
+685,place,"USA,London,UK,Detroit,Michigan,Heathrow Airport,",date,"1 November, 2003,12 December, 2002,15 Feb. 2003,10 February, 2004,16 March, 2004,2002,10 August, 2001,",0.00252022189294227960
+686,place,"USA,London,UK,Detroit,Michigan,",date,"1 November, 2003,12 December, 2002,15 Feb. 2003,10 February, 2004,16 March, 2004,1999,1996,2002,10 August, 2001,2000-2001,March 2002,26 November, 2002,1999-2000,23 October, 2000,",0.00461837444795371800
+687,place,"USA,New York,Bahamas,Nassau,Freeport,Maryland,Baltimore,New York City,NYC,",date,"13 December, 2004,20 September, 2004,21 November, 2004,19 December, 2004,14 November, 2004,12 December, 2004,18 December, 2004,21 September, 2004,7 November, 2004,17 December, 2004,",0.01973223328311867000
+688,place,"USA,New York,Bahamas,Nassau,Freeport,Maryland,",date,"1999,13 December, 2004,20 September, 2004,21 November, 2004,19 December, 2004,14 November, 2004,12 December, 2004,18 December, 2004,21 September, 2004,7 November, 2004,17 December, 2004,",0.00013651389083352148
+689,place,"USA,Bahamas,Nassau,Maryland,Baltimore,",date,"1994,13 December, 2004,20 September, 2004,21 November, 2004,19 December, 2004,14 November, 2004,12 December, 2004,18 December, 2004,21 September, 2004,7 November, 2004,17 December, 2004,",0.00268736512393175200
+690,place,"USA,New Jersey,Detroit,Michigan,Laurel,",date,"1 November, 2003,1994,1999,21 January, 2002,June 20 to July 2, 2000,",0.04020178643313415000
+691,place,"USA,New Jersey,Newark,Detroit,Michigan,",date,"1 November, 2003,1994,1992,1 July, 2003,21 January, 2002,June 20 to July 2, 2000,",0.01312659033910945800
+692,place,"USA,New Jersey,2116 27th St.,Laurel,Maryland,",date,"1994,1999,2001,21 January, 2002,June 20 to July 2, 2000,1991,17 September, 2004,14 September, 2004,29 October, 2004,",0.00786292382988624200
+693,place,"USA,Newark,Detroit,Michigan,Laurel,",date,"1 November, 2003,1994,21 January, 2002,June 20 to July 2, 2000,2002,10 August, 2001,",0.00278751296726287720
+694,place,"USA,Florida,Bahamas,Nassau,UK,Afghanistan,65 West End Ave.,Syria,Tampa,",date,"1998,1994,1964,1999 - 2000,March of 2000,June of 2000,",0.00226898561005833440
+695,place,"USA,Florida,Bahamas,Nassau,UK,Afghanistan,",date,"1998,1994,1964,1999 - 2000,March of 2000,June of 2000,1999,",0.00112040939236981280
+696,place,"USA,Bahamas,Nassau,UK,Afghanistan,",date,"1998,1994,1964,1999 - 2000,March of 2000,June of 2000,1999,1996,1993,1993 - 1998,July 17, 1999,",0.00445377787224653400
+697,place,"USA,Florida,Bahamas,Nassau,UK,",date,"4 February, 2004,5 February,7 February,1998,1994,1964,1999 - 2000,March of 2000,June of 2000,1999,1 May, 2003,",0.00431668885649393000
+698,place,"USA,California,235 Buckthorn St.,773 Flaxton St.,Culver City,Inglewood,",date,"20 June, 2003,1990s,1974,23 June, 2003,29 June, 2003,",0.00326068070444337100
+699,place,"USA,Windsor,Ontario,Canada,Morocco,Detroit,Michigan,Marrakech,",date,"5 March, 2004,1 July, 2003,27 October, 2004,25 October,18 July, 2004,",0.03455314685799377000
+700,place,"USA,Windsor,Ontario,Canada,Detroit,Michigan,",date,"15 December, 2003,1 November, 2003,5 March, 2004,1997,1992,1 July, 2003,2002,10 August, 2001,16 February, 2004,1995,27 October, 2004,25 October,18 July, 2004,",0.00383657342711965100
+701,place,"USA,Texas,Houston,Chicago,Illinois,",date,"2 October, 2003,12 March, 2003,April, 2000,16 June, 2003,27 September, 2003,27 April,",0.01610828266475374000
+702,place,"USA,Texas,2211 Cermak Rd.,Chicago,Illinois,O'Hare Airport,",date,"2 October, 2003,1999,16 May, 2003,July 18, 1999,28 September, 2003,27 September, 2003,27 April,",0.01975044636322210300
+703,place,"USA,Detroit,Michigan,562 Fenkell Ave.,Charlotte,North Carolina,River Rouge Park,237 Hayes Ave,",date,"15 December, 2003,5 March, 2004,1997,23 October, 2003,25 October, 2003,15 May, 2004,20 May, 2004,",0.03594801727517396600
+704,place,"Casablanca,Peshawar,Pakistan,Karachi,Islamabad,Marocco,Hyderabad,",date,"19 - 24 October, 2003,20 - 24 October,21 - 22 October,21 - 25 October,22 - 24 October,19 - 24 October,22 - 23 October,19 -21 October,20 - 23 October,",0.00000000000000000000
+705,place,"Windsor,Ontario,Canada,Detroit,Michigan,562 Fenkell Ave.,",date,"15 December, 2003,5 March, 2004,1997,11 October, 2004,20 October, 2004,",0.01452455374438488000
+706,place,"811 Tecumseh Rd.,Windsor,Ontario,Canada,Detroit,Michigan,",date,"15 December, 2003,5 March, 2004,1992,1 July, 2003,25 October,18 July, 2004,11 October, 2004,20 October, 2004,",0.00919904863601233000
+707,place,"Windsor,Ontario,Canada,Detroit,Michigan,",date,"15 December, 2003,1 November, 2003,5 March, 2004,1997,1992,1 July, 2003,2002,10 August, 2001,16 February, 2004,1995,27 October, 2004,25 October,18 July, 2004,11 October, 2004,20 October, 2004,",0.00551480517888823200
+708,place,"USA,Pakistan,New Jersey,224 Paulson Ave.,Clifton,New Brunswick,Lebanon,",date,"2 January, 2004,1990,1993,2001,3 November, 2003,27 November, 2003,1970,1965,",0.01885313684770335000
+709,place,"USA,Pakistan,New Jersey,224 Paulson Ave.,Clifton,",date,"2 January, 2004,1990,1993,2001,3 November, 2003,27 November, 2003,1970,1965,17 September, 2004,",0.03105099327110979700
+710,place,"USA,New Jersey,Columbia,224 Paulson Ave.,Clifton,231 12th St.,Missouri,",date,"20 November, 2003,1 November, 2003,12 September, 2003,3 November, 2003,July, 2001,10 October, 2003,",0.00068522324453237540
+711,place,"USA,New Jersey,Columbia,224 Paulson Ave.,Clifton,",date,"20 November, 2003,1 November, 2003,2 January, 2004,12 September, 2003,3 November, 2003,July, 2001,10 October, 2003,1991,",0.05852464419645886400
+712,place,"811 Tecumseh Rd.,Windsor,Ontario,Canada,Morocco,Marrakech,",date,"5 March, 2004,15 July,1 August, 2003,1 July, 2003,25 October,18 July, 2004,",0.00041128967556019086
+713,place,"Windsor,Ontario,Canada,Morocco,Marrakech,",date,"5 March, 2004,15 July,1 August, 2003,1 July, 2003,27 October, 2004,25 October,18 July, 2004,",0.00460974361079348900
+714,place,"USA,Detroit,Michigan,Saudi Arabia,Riyadh,Ann Arbor,",date,"1997,1994,1999,1996,8, March, 2004,April of 2000,January, 2001,",0.00311257055907230430
+715,place,"Paris,France,Cairo,Madrid,Spain,",date,"2 - 5 December, 2003,22 - 24 December, 2003,13 - 18 January, 2004,1 - 5 December, 2003,21 - 24 December, 2003,12 - 18 January, 2004,",0.00000000000000000000
+716,place,"Casablanca,Cuba,Havana,Marocco,San Cristobal,",date,"23 October, 2003,19 October, 2003,22 October, 2003,21 October, 2003,18 October, 2003,",0.00090466814317612380
+717,place,"USA,Florida,Miami,Bahamas,Nassau,",date,"4 February, 2004,5 February,7 February,13 December, 2004,20 September, 2004,21 November, 2004,19 December, 2004,15 November, 2004,29 November, 2004,",0.00386195580905993340
+718,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,Morocco,Detroit,Michigan,Marrakech,",organization,"NSA,DIA,Detroit Utilities Co.,RCMP,Canada Eastern Airlines,",0.00403391145506872600
+719,place,"USA,Canada,Morocco,Detroit,Michigan,",organization,"NSA,DIA,Al Qaeda,Detroit Utilities Co.,RCMP,Canada Eastern Airlines,",0.03558592450155556600
+720,place,"USA,Bahamas,Nassau,London,UK,Afghanistan,Chicago,Illinois,",organization,"FBI,MI 5,Al Qaeda,Freeport Star Hotel,Seashore Hotel,",0.02353703119704462400
+721,place,"USA,Bahamas,Nassau,London,UK,",organization,"FBI,Pakistani Intelligence,MI 5,Al Qaeda,Freeport Star Hotel,Seashore Hotel,Baker St. Mosque,",0.06321061957014136000
+722,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,Morocco,Marrakech,",organization,"NSA,DIA,Detroit Utilities Co.,AOL,RCMP,Canada Eastern Airlines,",0.01726555037298545300
+723,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,New Jersey,Newark,Detroit,Michigan,Chicago,Illinois,Columbus,Ohio,",organization,"NSA,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,",0.01239615269777976500
+724,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,New Jersey,Newark,Detroit,Michigan,Chicago,Illinois,",organization,"FBI,NSA,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,",0.00971585373332119400
+725,place,"USA,Canada,New Jersey,Detroit,Michigan,Chicago,Illinois,",organization,"FBI,NSA,Al Qaeda,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,",0.02640010497434925800
+726,place,"USA,Detroit,Michigan,Chicago,Illinois,",organization,"FBI,NSA,MI 5,Al Qaeda,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,",0.01700231409049409200
+727,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,Detroit,Michigan,",organization,"FBI,NSA,DIA,Detroit Utilities Co.,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,",0.00981313371601770700
+728,place,"USA,Windsor,Ontario,Canada,New Jersey,Newark,Detroit,Michigan,",organization,"FBI,NSA,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,Hamas,",0.01758959753164568800
+729,place,"USA,Canada,New Jersey,Detroit,Michigan,",organization,"FBI,NSA,Al Qaeda,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,Hamas,",0.00914466783083513500
+730,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,New Jersey,",organization,"FBI,NSA,AOL,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,",0.02273483055049376600
+731,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,",organization,"FBI,NSA,DIA,Detroit Utilities Co.,AOL,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,",0.02431455967358783400
+732,place,"USA,Windsor,Ontario,Canada,New Jersey,",organization,"FBI,NSA,AOL,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,Hamas,",0.09302829983090277000
+733,place,"USA,Texas,Mexico,Columbia,Arlington,Presidio,Dallas,Grand Prairie,",organization,"FBI,God's Aryan Militia,ELN,FirstTex Bank,Arlington police,University of Texas in Arlington,",0.04846382742841942600
+734,place,"USA,Texas,Saudi Arabia,Chicago,Illinois,Bellaire,",organization,"FBI,God's Aryan Militia,Al Qaeda,TexEast Petroleum Co.,USCIS,",0.00851617442251710000
+735,place,"USA,Canada,Detroit,Michigan,Afghanistan,",organization,"FBI,DIA,Al Qaeda,RCMP,University of Maryland,",0.11491634270338523000
+736,place,"USA,Windsor,Ontario,Canada,Detroit,Michigan,",organization,"FBI,NSA,DIA,Detroit Utilities Co.,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,Hamas,University of Maryland,",0.01798629898882376400
+737,place,"USA,Canada,Paris,France,Afghanistan,Chicago,Illinois,",organization,"Al Qaeda,RCMP,Surete' de l'Etat,Amercan Embassy in Paris,Al Badr II training camp,",0.03271764498854778000
+738,place,"USA,Canada,Afghanistan,Chicago,Illinois,",organization,"FBI,Al Qaeda,RCMP,Surete' de l'Etat,Amercan Embassy in Paris,Al Badr II training camp,",0.02593056759484666700
+739,place,"USA,Canada,Paris,France,Afghanistan,",organization,"Al Qaeda,RCMP,CSIS,Surete' de l'Etat,Amercan Embassy in Paris,Al Badr II training camp,",0.00529878183207007400
+740,place,"USA,Canada,Paris,France,Montreal,",organization,"Al Qaeda,Surete' de l'Etat,Amercan Embassy in Paris,Al Badr II training camp,Canadauto Car Rental Agency,",0.01271629545566808400
+741,place,"USA,Canada,London,UK,Detroit,Michigan,",organization,"FBI,Al Qaeda,Hamas,Kanjak Training Camp,Al Khaldun  training camp,Al-Badr I training camp,",0.09905196898502540000
+742,place,"USA,London,UK,Detroit,Michigan,",organization,"FBI,MI 5,Al Qaeda,Hamas,Kanjak Training Camp,Al Khaldun  training camp,Al-Badr I training camp,",0.03227839852984607000
+743,place,"USA,Canada,London,UK,Montreal,",organization,"Al Qaeda,Baker St. Mosque,Kanjak Training Camp,Al Khaldun  training camp,Al-Badr I training camp,",0.01455212824042692600
+744,place,"USA,New Jersey,Newark,Detroit,Michigan,2116 27th St.,Laurel,Maryland,Baltimore,",organization,"FBI,Taliban,Baltimore City College,Islamic Circle of North America,ICNA,",0.00771120375420747000
+745,place,"USA,New Jersey,2116 27th St.,Laurel,Maryland,",organization,"FBI,Taliban,Baltimore City College,Islamic Circle of North America,ICNA,American Islamic Scholarship Fund,",0.05625011200742775000
+746,place,"USA,New Jersey,Newark,Detroit,Michigan,Laurel,",organization,"FBI,Taliban,Baltimore City College,Islamic Circle of North America,ICNA,Hamas,",0.00655384968718547650
+747,place,"USA,New Jersey,Newark,Detroit,Michigan,",organization,"FBI,NSA,RCMP,Canada Eastern Airlines,Hezbollah,Canadian Eastern Airlines,Taliban,Baltimore City College,Islamic Circle of North America,ICNA,Hamas,",0.03005408856759876300
+748,place,"USA,Florida,Bahamas,Nassau,UK,Afghanistan,65 West End Ave.,Syria,Tampa,",organization,"MI 6,Al Qaeda,Baker St. mosque,Gulf Shores Bank,Middle Eastern Charities,",0.00612411492385890600
+749,place,"USA,Bahamas,Nassau,UK,Afghanistan,",organization,"FBI,MI 6,MI 5,Al Qaeda,Baker St. mosque,Gulf Shores Bank,Middle Eastern Charities,Freeport Star Hotel,Seashore Hotel,",0.00554191920479151100
+750,place,"USA,Florida,Bahamas,Nassau,UK,",organization,"MI 6,Pakistani Intelligence,Al Qaeda,Baker St. mosque,Gulf Shores Bank,Middle Eastern Charities,Baker St. Mosque,",0.00448771026782349800
+751,place,"USA,London,UK,Texas,Chicago,Illinois,",organization,"FBI,MI 5,Al Qaeda,Islamic Jihad,USCIS,",0.02113785487029490300
+752,place,"USA,London,UK,Chicago,Illinois,",organization,"FBI,MI 5,Al Qaeda,Freeport Star Hotel,Seashore Hotel,Islamic Jihad,USCIS,",0.00749898243915036300
+753,place,"USA,Texas,Houston,Chicago,Illinois,",organization,"FBI,God's Aryan Militia,Al Qaeda,TexEast Petroleum Co.,Drexel Car Rental Agency,Central States Airline,",0.01061509262525029700
+754,place,"USA,Texas,2211 Cermak Rd.,Chicago,Illinois,O'Hare Airport,",organization,"FBI,MI 5,Islamic Jihad,USCIS,Drexel Car Rental Agency,Central States Airline,",0.01167843848788552100
+755,place,"USA,Detroit,Michigan,562 Fenkell Ave.,Charlotte,North Carolina,River Rouge Park,237 Hayes Ave,",organization,"FBI,DIA,BailOut,Carolina First Bank,Detroit police,",0.02831283580777712400
+756,place,"USA,Detroit,Michigan,Charlotte,North Carolina,",organization,"FBI,DIA,BailOut,Carolina First Bank,Detroit police,Hezbollah,",0.01561380011960910300
+757,place,"USA,Pakistan,New Jersey,224 Paulson Ave.,Clifton,New Brunswick,Lebanon,",organization,"FBI,University of Missouri,Rutgers University,American University in Beirut,Western Union,",0.03357362486716628700
+758,place,"USA,Pakistan,New Jersey,224 Paulson Ave.,Clifton,",organization,"FBI,Al Qaeda,University of Missouri,Rutgers University,American University in Beirut,Western Union,",0.04863193830751596000
+759,place,"USA,New Jersey,Columbia,224 Paulson Ave.,Clifton,231 12th St.,Missouri,",organization,"Al Qaeda,AOL,University of Missouri,Hamas,Central Farmers Auto Insurance Co.,Mid States Insurance Company,Columbia First State Bank,Mid States,Central Farmers,",0.01712292054177024000
+760,place,"USA,New Jersey,Columbia,224 Paulson Ave.,Clifton,Missouri,",organization,"FBI,Al Qaeda,AOL,University of Missouri,Hamas,Central Farmers Auto Insurance Co.,Mid States Insurance Company,Columbia First State Bank,Mid States,Central Farmers,",0.01480796522323399000
+761,place,"811 Tecumseh Rd.,Windsor,Ontario,Canada,Morocco,Marrakech,",organization,"NSA,DIA,Detroit Utilities Co.,AOL,Oasis Internet Cafe,RCMP,Canada Eastern Airlines,",0.02617373025498421700
+762,place,"USA,Texas,Houston,Bellaire,3236 Pine St.,",organization,"FBI,God's Aryan Militia,Al Qaeda,TexEast Petroleum Co.,StoreAll Rental,RentAll,",0.16865794428566616000
+763,place,"USA,Detroit,Michigan,Saudi Arabia,Riyadh,",organization,"FBI,NSA,Al Qaeda,Detroit Utilities Co.,University of Michigan at Ann Arbor,",0.00614244817186430600
+764,place,"USA,Charlotte,North Carolina,3131 Western Ave.,Dubai,UAE,",organization,"BailOut,Carolina First Bank,Hezbollah,Southern Trailways,First Emirate Bank,",0.06858425099705275000
+765,place,"USA,New York,Virginia,Florida,New Jersey,455 11th St.,Miami Beach,224 Paulson Ave.,Clifton,2116 27th St.,Laurel,Maryland,Baltimore,1721 Glade Dr,Reston,1641 Pitkin Ave,Brooklyn,1621 Charles Ave.,Potomac,6132 Broward Blvd,Fort Lauderdale,CLifton,",person,"Adnan Hijazi,Hijazi,Wali Shakur,Mounir Mzoudi,Hamza al Midhar,Mamoun Zammar,",0.01284859542082410600
+766,place,"USA,Florida,Bahamas,New Jersey,Nassau,Freeport,455 11th St.,Miami Beach,",person,"Wali Shakur,Mounir Mzoudi,Omar Mahmoud Othman,Hamza al Midhar,Mamoun Zammar,",0.04666983925261157000
+767,place,"USA,Florida,Bahamas,Nassau,Freeport,",person,"Omar Hanif,Hanif,Wali Shakur,Mounir Mzoudi,Omar Mahmoud Othman,Hamza al Midhar,Mamoun Zammar,",0.04006295101872107000
+768,place,"USA,New York,Virginia,Florida,Bahamas,New Jersey,Nassau,455 11th St.,Miami Beach,224 Paulson Ave.,Clifton,2116 27th St.,Laurel,Maryland,1721 Glade Dr,Reston,1641 Pitkin Ave,Brooklyn,1621 Charles Ave.,Potomac,6132 Broward Blvd,Fort Lauderdale,CLifton,",person,"Muhammed Dandani,Wali Shakur,Mounir Mzoudi,Hamza al Midhar,Mamoun Zammar,Said Khadr,",0.00121499194871260120
+769,place,"USA,Virginia,New Jersey,Newark,Detroit,Michigan,2116 27th St.,Laurel,Maryland,Baltimore,",person,"Adnan Hijazi,Hijazi,Mounir Mzoudi,J. T.,A. H.,M. M.,",0.00492653183550462300
+770,place,"USA,Virginia,New Jersey,2116 27th St.,Laurel,Maryland,Baltimore,",person,"Adnan Hijazi,Hijazi,Wali Shakur,Mounir Mzoudi,J. T.,A. H.,M. M.,Hamza al Midhar,Mamoun Zammar,",0.00053830868403025710
+771,place,"USA,Virginia,New Jersey,Newark,2116 27th St.,Laurel,Maryland,",person,"Adnan Hijazi,Hijazi,Mounir Mzoudi,J. T.,A. H.,M. M.,HIjazi,",0.00062448164074760080
+772,place,"Cuba,Buenos Aires,Argentina,Calamar,Columbia,",person,"Jose Escalante,Billy Jack Hawkins,Slade Goodman,Saeed al Nami,Riyad al Taifi,Escalante,",0.00504790518661413050
+773,place,"USA,Canada,Afghanistan,Montreal,Quebec,Chicago,Illinois,",person,"Omar Mahmoud Othman,Abdillah Zinedine,Abu Hafs,Mehdi Rafiki,Zinedine,",0.00507376839258795900
+774,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,Morocco,Detroit,Michigan,562 Fenkell Ave.,Marrakech,",person,"Abdul al Nami,al Nami,Satam Derwish,Derwish,Ronald,Satam,",0.00084665965437175250
+775,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,Detroit,Michigan,562 Fenkell Ave.,",person,"Rifai Qasim,Abdul al Nami,Raeed Beandali,al Nami,Satam Derwish,Derwish,Ronald,Satam,",0.00802609568224881000
+776,place,"USA,New York,Virginia,Florida,New Jersey,455 11th St.,Miami Beach,224 Paulson Ave.,Clifton,2116 27th St.,Laurel,Maryland,1721 Glade Dr,Reston,1641 Pitkin Ave,Brooklyn,1621 Charles Ave.,Potomac,6132 Broward Blvd,Fort Lauderdale,CLifton,",person,"Adnan Hijazi,Hijazi,Muhammed Dandani,Wali Shakur,Mounir Mzoudi,Hamza al Midhar,Mamoun Zammar,Said Khadr,HIjazi,Abdul Karim,Karim,",0.00080058038367303590
+777,place,"USA,Virginia,New Jersey,2116 27th St.,Laurel,Maryland,",person,"Adnan Hijazi,Hijazi,Muhammed Dandani,Wali Shakur,Mounir Mzoudi,J. T.,A. H.,M. M.,Hamza al Midhar,Mamoun Zammar,Said Khadr,HIjazi,Abdul Karim,Karim,",0.00365082723898775770
+778,place,"USA,Florida,Bahamas,Nassau,London,UK,11 Apple St.,",person,"Omar Hanif,Hanif,Omar Mahmoud Othman,Riyad Yasser,Yasser,",0.02032684152422777000
+779,place,"USA,Florida,Bahamas,New Jersey,Nassau,455 11th St.,Miami Beach,",person,"Muhammed Dandani,Wali Shakur,Mounir Mzoudi,Omar Mahmoud Othman,Riyad Yasser,Yasser,Hamza al Midhar,Mamoun Zammar,Said Khadr,",0.00689007391026682500
+780,place,"USA,Canada,New Jersey,London,UK,Heathrow Airport,",person,"J. T.,A. H.,M. M.,Omar Mahmoud Othman,Riyad Yasser,Yasser,",0.02971008917174968600
+781,place,"USA,Florida,New Jersey,455 11th St.,Miami Beach,",person,"Adnan Hijazi,Hijazi,Muhammed Dandani,Wali Shakur,Mounir Mzoudi,Omar Mahmoud Othman,Riyad Yasser,Yasser,Hamza al Midhar,Mamoun Zammar,Said Khadr,HIjazi,Abdul Karim,Karim,",0.06185208981382652000
+782,place,"USA,Windsor,Ontario,Canada,New Jersey,Newark,Detroit,Michigan,Maryland,",person,"R. Derwish,J. T.,A. H.,M. M.,Abu Somad,Yazid Bafaba,",0.02397588043899508500
+783,place,"USA,New Jersey,Newark,Los Angeles,California,",person,"R. Derwish,Riduan Sungkar,Omar Evertts,Abu Somad,Yazid Bafaba,",0.03582699034333966500
+784,place,"USA,Windsor,Ontario,Canada,Detroit,Michigan,Afghanistan,Los Angeles,California,Maryland,Feyzabad,",person,"Abdul al Nami,R. Derwish,Abu Somad,Yazid Bafaba,Khaled Jehani,",0.01389777041684943500
+785,place,"USA,Windsor,Ontario,Canada,Detroit,Michigan,Afghanistan,",person,"Abdul al Nami,Raeed Beandali,R. Derwish,Abu Somad,Yazid Bafaba,Khaled Jehani,",0.03164679709200147000
+786,place,"USA,Windsor,Ontario,Canada,Detroit,Michigan,Maryland,",person,"Abdul al Nami,R. Derwish,J. T.,A. H.,M. M.,Abu Somad,Yazid Bafaba,Khaled Jehani,",0.00211477846382532270
+787,place,"Cuba,Ojinaga,Mexico,Calamar,Columbia,",person,"Billy Jack Hawkins,Slade Goodman,Saeed al Nami,Riyad al Taifi,Carlos,",0.02876417412278791200
+788,place,"Santo Domingo,Dominican Republic,Cuba,Havana,Buenos Aires,Argentina,Santa Domingo,",person,"Jose Escalante,Morales,Carlos Morales,Escalante,Arze,",0.00066094570494351310
+789,place,"Santo Domingo,Dominican Republic,Cuba,Havana,Santa Domingo,Columbia,45 Desague St.,",person,"Sufaat,Jose Escalante,Carlos Morales,Arze,Carlos,",0.03630768388245408000
+790,place,"Santo Domingo,Dominican Republic,Cuba,Havana,Santa Domingo,Columbia,",person,"Sufaat,Jose Escalante,Carlos Morales,Escalante,Arze,Carlos,",0.17192761190204006000
+791,place,"Santo Domingo,Dominican Republic,Cuba,Havana,Santa Domingo,",person,"Sufaat,Jose Escalante,Morales,Carlos Morales,Boris Bugarov,Escalante,Arze,Carlos,",0.00043061214568709680
+792,place,"USA,Windsor,Ontario,Canada,Virginia,Newark,London,UK,Detroit,Michigan,Heathrow Airport,Laurel,Dulles International Airport,Dulles,Herndon,Roanoke,",person,"J. T.,A. H.,M. M.,Mousa Salah,Shadi abu Hoshar,April Stevens,Salah,Stevens,",0.00284404373633551440
+793,place,"USA,Virginia,Newark,Detroit,Michigan,Laurel,",person,"Adnan Hijazi,Hijazi,Mounir Mzoudi,J. T.,A. H.,M. M.,Mousa Salah,Shadi abu Hoshar,April Stevens,Salah,Stevens,",0.01430237969864777200
+794,place,"USA,Windsor,Ontario,Canada,London,UK,Detroit,Michigan,Heathrow Airport,",person,"Raeed Beandali,J. T.,A. H.,M. M.,Mousa Salah,Shadi abu Hoshar,April Stevens,Salah,Stevens,",0.00256012928259774200
+795,place,"USA,Canada,London,UK,Heathrow Airport,",person,"Raeed Beandali,J. T.,A. H.,M. M.,Omar Mahmoud Othman,Mousa Salah,Shadi abu Hoshar,April Stevens,Salah,Stevens,Riyad Yasser,Yasser,",0.03725404494991821000
+796,place,"Santo Domingo,Dominican Republic,Cuba,Havana,Buenos Aires,Argentina,Columbia,",person,"Jose Escalante,Carlos Morales,Escalante,Arze,Cesar Arze,",0.00034968804196587784
+797,place,"Santo Domingo,Dominican Republic,Cuba,Havana,Buenos Aires,Argentina,",person,"Jose Escalante,Morales,Carlos Morales,Escalante,Arze,Cesar Arze,",0.01616985441703180000
+798,place,"USA,Pakistan,New Jersey,Columbia,224 Paulson Ave.,Clifton,New Brunswick,Lebanon,231 12th St.,Missouri,",person,"Wali Shakur,Ahmed Doha,Abu Ayyash,Doha,Ayyash,",0.01414158619265279200
+799,place,"USA,Chicago,Illinois,Amsterdam,Netherlands,Los Angeles,California,235 Buckthorn St.,773 Flaxton St.,Culver City,Inglewood,71 Voorburg straat,Kuala Lumpur,Malaysia,",person,"Riduan Sungkar,Omar Evertts,A. Somad,Y. Bafaba,Sungkar,",0.01219223505791006000
+800,place,"USA,Chicago,Illinois,Los Angeles,California,",person,"R. Derwish,Riduan Sungkar,Omar Evertts,A. Somad,Y. Bafaba,Sungkar,",0.02131540039214704600
+801,place,"USA,Los Angeles,California,235 Buckthorn St.,773 Flaxton St.,Culver City,Inglewood,",person,"Riduan Sungkar,Omar Evertts,A. Somad,Y. Bafaba,Sungkar,Abu Somad,Yazid Bafaba,",0.00838846663678279000
+802,place,"USA,Bahamas,Nassau,London,UK,Islamabad,Afghanistan,Freeport,11 Apple St.,Chicago,Illinois,Baker St.,London Heathrow,Yemen,",person,"Omar Hanif,Hanif,Jamal al Quso,Omar Mahmoud Othman,Othman,",0.00178133546304271100
+803,place,"USA,Bahamas,Nassau,London,UK,11 Apple St.,",person,"Omar Hanif,Hanif,Jamal al Quso,Omar Mahmoud Othman,Othman,Riyad Yasser,Yasser,",0.01297967301866185200
+804,place,"USA,London,UK,Afghanistan,Chicago,Illinois,",person,"Omar Hanif,Hanif,Jamal al Quso,Omar Mahmoud Othman,Othman,Murad,",0.16158186847792620000
+805,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,New Jersey,Newark,Detroit,Michigan,Chicago,Illinois,Columbus,Ohio,",person,"R. Derwish,Satam Derwish,Derwish,Ronald,Ronald Derwish,",0.00368644628892403740
+806,place,"USA,Canada,New Jersey,Chicago,Illinois,",person,"R. Derwish,Satam Derwish,Derwish,Ronald,Ronald Derwish,Omar Mahmoud Othman,",0.01657563548616260000
+807,place,"USA,New Jersey,Newark,Chicago,Illinois,",person,"R. Derwish,Satam Derwish,Derwish,Ronald,Ronald Derwish,Riduan Sungkar,Omar Evertts,",0.04845597390043753000
+808,place,"USA,Windsor,Ontario,Canada,New Jersey,Newark,Detroit,Michigan,",person,"R. Derwish,Satam Derwish,Derwish,Ronald,Ronald Derwish,J. T.,A. H.,M. M.,Abu Somad,Yazid Bafaba,",0.00495384734108687900
+809,place,"USA,Windsor,Ontario,Canada,Newark,Detroit,Michigan,",person,"R. Derwish,Satam Derwish,Derwish,Ronald,Ronald Derwish,J. T.,A. H.,M. M.,Mousa Salah,Shadi abu Hoshar,April Stevens,Salah,Stevens,Abu Somad,Yazid Bafaba,",0.01149917689931824100
+810,place,"USA,Texas,Mexico,Columbia,Arlington,Presidio,Dallas,Grand Prairie,",person,"Billy Jack Hawkins,Slade Goodman,Saeed al Nami,Riyad al Taifi,Ruth Tucker,A. Doman,",0.08804902788848944000
+811,place,"USA,Canada,New York,Paris,France,Buffalo,Afghanistan,",person,"Abdul Ahmed Nasser,Fr. Augustin Dominique,Abdal al Hawsawi,Abdillah Zinedine,Abu Hafs,Mehdi Rafiki,Zinedine,",0.02325833249313449000
+812,place,"USA,Cuba,Texas,Houston,Mexico,Columbia,Chetumal,Cartagena,Guane,",person,"Billy Jack Hawkins,Slade Goodman,Saeed al Nami,Riyad al Taifi,Ramon,",0.00792502766296090100
+813,place,"USA,Cuba,Texas,Houston,Mexico,Columbia,Cartagena,Guane,",person,"Billy Jack Hawkins,Slade Goodman,Saeed al Nami,Riyad al Taifi,Juan,Ramon,",0.00329774311939952470
+814,place,"USA,Canada,Paris,France,Afghanistan,Montreal,Chicago,Illinois,73 Rue Duhesme,America,Pakhtia,",person,"Abdillah Zinedine,Abu Hafs,Mehdi Rafiki,Zinedine,Murad,Zakarya Ziyad,",0.00799614267928742300
+815,place,"USA,Canada,Afghanistan,Montreal,Chicago,Illinois,",person,"Omar Mahmoud Othman,Abdillah Zinedine,Abu Hafs,Mehdi Rafiki,Zinedine,Murad,Zakarya Ziyad,",0.01232037726675331000
+816,place,"USA,Canada,Afghanistan,Chicago,Illinois,",person,"R. Derwish,Omar Mahmoud Othman,Abdillah Zinedine,Abu Hafs,Mehdi Rafiki,Zinedine,Murad,Zakarya Ziyad,",0.04055108601394074400
+817,place,"USA,Canada,Paris,France,Afghanistan,",person,"Abdul Ahmed Nasser,Fr. Augustin Dominique,Abdal al Hawsawi,Abdillah Zinedine,Abu Hafs,Mehdi Rafiki,Zinedine,Murad,Zakarya Ziyad,",0.02006836362093096500
+818,place,"USA,Canada,New York,Paris,France,Buffalo,Montreal,Quebec,175 Rue Durocher,Walden Ave.,Schiller Park,",person,"Abdillah Zinedine,Abu Hafs,Mehdi Rafiki,Zinedine,Patrick O'Malley,Patrick O'alley,O'alley,",0.05314805572362154400
+819,place,"USA,Canada,New York,Paris,France,Buffalo,",person,"Abdul Ahmed Nasser,Fr. Augustin Dominique,Abdal al Hawsawi,Abdillah Zinedine,Abu Hafs,Mehdi Rafiki,Zinedine,Patrick O'Malley,Patrick O'alley,O'alley,",0.02076335060158655800
+820,place,"USA,Canada,Paris,France,Montreal,",person,"Abdillah Zinedine,Abu Hafs,Mehdi Rafiki,Zinedine,Murad,Zakarya Ziyad,Patrick O'Malley,Patrick O'alley,O'alley,",0.00982757418926838600
+821,place,"USA,Canada,London,UK,Montreal,",person,"Raeed Beandali,Omar Mahmoud Othman,Murad,Riyad Yasser,Yasser,David Loiseau,Fahd Khadr,",0.02268894842807815000
+822,place,"USA,Canada,London,UK,Detroit,Michigan,",person,"Raeed Beandali,J. T.,A. H.,M. M.,Mousa Salah,Shadi abu Hoshar,April Stevens,Salah,Stevens,David Loiseau,Fahd Khadr,",0.00303852199908658800
+823,place,"USA,Florida,Bahamas,Nassau,455 11th St.,Miami Beach,",person,"Muhammed Dandani,Dandani,Wali Shakur,Mounir Mzoudi,Omar Mahmoud Othman,Riyad Yasser,Yasser,Hamza al Midhar,Mamoun Zammar,Said Khadr,",0.01513055475768131100
+824,place,"USA,London,UK,Detroit,Michigan,Afghanistan,Heathrow Airport,12 Lavender Grove,Hackney,",person,"Raeed Beandali,Reginald Cooper,Ralph Bean,Mahmud al-Dahab,Cooper,al Dahab,",0.01401640387007870900
+825,place,"USA,London,UK,Afghanistan,Heathrow Airport,",person,"Raeed Beandali,Reginald Cooper,Ralph Bean,Mahmud al-Dahab,Cooper,al Dahab,Omar Mahmoud Othman,",0.02114616515338889000
+826,place,"USA,London,UK,Detroit,Michigan,Heathrow Airport,",person,"Raeed Beandali,Reginald Cooper,Ralph Bean,Mahmud al-Dahab,Cooper,al Dahab,J. T.,A. H.,M. M.,Mousa Salah,Shadi abu Hoshar,April Stevens,Salah,Stevens,",0.00204074509488471040
+827,place,"USA,London,UK,Detroit,Michigan,",person,"Raeed Beandali,Reginald Cooper,Ralph Bean,Mahmud al-Dahab,Cooper,al Dahab,J. T.,A. H.,M. M.,Mousa Salah,Shadi abu Hoshar,April Stevens,Salah,Stevens,David Loiseau,Fahd Khadr,",0.00238767728689522840
+828,place,"USA,Florida,Bahamas,Nassau,UK,Afghanistan,",person,"Omar Hanif,Hanif,Imad Dahdah,Dahdah,Omar Mahmoud Othman,",0.02063946230466072000
+829,place,"USA,Florida,Bahamas,Nassau,UK,",person,"Omar Hanif,Hanif,Imad Dahdah,Dahdah,Omar Mahmoud Othman,Riyad Yasser,Yasser,",0.01127077153940934800
+830,place,"USA,Bahamas,Nassau,UK,Afghanistan,",person,"Omar Hanif,Hanif,Imad Dahdah,Dahdah,Jamal al Quso,Omar Mahmoud Othman,Othman,",0.01154829144790804600
+831,place,"USA,New Jersey,Newark,Detroit,Michigan,2116 27th St.,Laurel,Maryland,Baltimore,",person,"Adnan Hijazi,Hijazi,Mounir Mzoudi,J. T.,A. H.,M. M.,Martha Mason,Mzoudi,",0.04222671895655390000
+832,place,"USA,New Jersey,2116 27th St.,Laurel,Maryland,Baltimore,",person,"Adnan Hijazi,Hijazi,Wali Shakur,Mounir Mzoudi,J. T.,A. H.,M. M.,Martha Mason,Mzoudi,Hamza al Midhar,Mamoun Zammar,",0.03129466468687057400
+833,place,"USA,New Jersey,Newark,2116 27th St.,Laurel,Maryland,",person,"Adnan Hijazi,Hijazi,Mounir Mzoudi,J. T.,A. H.,M. M.,Martha Mason,Mzoudi,HIjazi,",0.14934472179164090000
+834,place,"USA,New Jersey,2116 27th St.,Laurel,Maryland,",person,"Adnan Hijazi,Hijazi,Muhammed Dandani,Wali Shakur,Mounir Mzoudi,J. T.,A. H.,M. M.,Martha Mason,Mzoudi,Hamza al Midhar,Mamoun Zammar,Said Khadr,HIjazi,Abdul Karim,Karim,",0.12078615981222454000
+835,place,"USA,New Jersey,Newark,Detroit,Michigan,Maryland,",person,"Adnan Hijazi,Hijazi,R. Derwish,Mounir Mzoudi,J. T.,A. H.,M. M.,Martha Mason,Mzoudi,Abu Somad,Yazid Bafaba,",0.09627502172213719000
+836,place,"USA,Newark,Detroit,Michigan,Laurel,",person,"Adnan Hijazi,Hijazi,Mounir Mzoudi,J. T.,A. H.,M. M.,Martha Mason,Mzoudi,Mousa Salah,Shadi abu Hoshar,April Stevens,Salah,Stevens,",0.03993636239153921000
+837,place,"USA,New Jersey,Newark,Detroit,Michigan,",person,"Adnan Hijazi,Hijazi,R. Derwish,Satam Derwish,Derwish,Ronald,Ronald Derwish,Mounir Mzoudi,J. T.,A. H.,M. M.,Martha Mason,Mzoudi,Abu Somad,Yazid Bafaba,",0.01241063199979736100
+838,place,"USA,London,UK,Texas,2211 Cermak Rd.,Chicago,Illinois,O'Hare Airport,Sears Tower,",person,"Jamal al Quso,Murad,Abdul Murad,Khalid S.,Quso,Jamal,",0.02693649661586285800
+839,place,"USA,London,UK,Chicago,Illinois,",person,"Omar Hanif,Hanif,Jamal al Quso,Omar Mahmoud Othman,Othman,Murad,Abdul Murad,Khalid S.,Quso,Jamal,",0.05635236323833116000
+840,place,"Santo Domingo,Dominican Republic,Cuba,Havana,Columbia,Caribbean,",person,"Jose Escalante,Escalante,Arze,Cesar Arze,Hector Lopez,Lopez,",0.00199617540361244600
+841,place,"Santo Domingo,Dominican Republic,Cuba,Havana,Columbia,Bogota,",person,"Arze,Cesar Arze,Hector Lopez,Lopez,Carlos,",0.04211123901232878000
+842,place,"Santo Domingo,Dominican Republic,Cuba,Havana,Columbia,",person,"Sufaat,Jose Escalante,Carlos Morales,Escalante,Arze,Cesar Arze,Hector Lopez,Lopez,Carlos,",0.02159187142436621000
+843,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,Morocco,Detroit,Michigan,Marrakech,",person,"Abdul al Nami,al Nami,Abdul,R. Derwish,Satam Derwish,Derwish,Ronald,Satam,Ali,",0.02911989565424853000
+844,place,"USA,Windsor,Ontario,Canada,Morocco,Detroit,Michigan,Marrakech,",person,"Abdul al Nami,al Nami,Abdul,R. Derwish,Satam Derwish,Derwish,Ronald,Khaled Jehani,Satam,Ali,",0.02058325183296112400
+845,place,"USA,811 Tecumseh Rd.,Windsor,Ontario,Canada,Detroit,Michigan,",person,"Rifai Qasim,Abdul al Nami,Raeed Beandali,al Nami,Abdul,R. Derwish,Satam Derwish,Derwish,Ronald,Ronald Derwish,Satam,Ali,",0.01651568723499147200
+846,place,"USA,Windsor,Ontario,Canada,Detroit,Michigan,",person,"Rifai Qasim,Abdul al Nami,Raeed Beandali,al Nami,Abdul,R. Derwish,Satam Derwish,Derwish,Ronald,Ronald Derwish,J. T.,A. H.,M. M.,Mousa Salah,Shadi abu Hoshar,April Stevens,Salah,Stevens,Abu Somad,Yazid Bafaba,Khaled Jehani,Satam,Ali,",0.03616666204405428000
+847,place,"USA,Texas,Houston,Chicago,Illinois,",person,"Khalid Shamrani,Shamrani,Walter Smith,Abu Hafs,Mehdi Rafiki,Rafiki,",0.00550536385031721000
+848,place,"USA,Texas,2211 Cermak Rd.,Chicago,Illinois,O'Hare Airport,",person,"Jamal al Quso,Abu Hafs,Mehdi Rafiki,Murad,Abdul Murad,Khalid S.,Quso,Jamal,Rafiki,",0.00222002099115359900
+849,place,"USA,New Jersey,Newark,California,235 Buckthorn St.,773 Flaxton St.,Culver City,Inglewood,",person,"Riduan Sungkar,Omar Evertts,Abu Somad,Yazid Bafaba,Somad,Bafaba,",0.00962467111622989300
+850,place,"USA,California,235 Buckthorn St.,773 Flaxton St.,Culver City,Inglewood,",person,"Riduan Sungkar,Omar Evertts,A. Somad,Y. Bafaba,Sungkar,Abu Somad,Yazid Bafaba,Somad,Bafaba,",0.00484101652215240200
+851,place,"Peshawar,Pakistan,Africa,22 Hoveniersstraat,Antwerp,Belgium,Panama City,Panama,",person,"Adnan Hijazi,Hijazi,Pieter Dopple,Ramundo Ortiz,Ortiz,Dopple,",0.00000000000000000000
+852,place,"USA,Detroit,Michigan,562 Fenkell Ave.,Charlotte,North Carolina,River Rouge Park,237 Hayes Ave,",person,"Rifai Qasim,Abdul al Nami,Omar Blakely,Muhammed Mustafa,Blakely,Howard Clark,Qasim,Rifai,Clark,",0.02421411953758279000
+853,place,"USA,Pakistan,New Jersey,224 Paulson Ave.,Clifton,New Brunswick,Lebanon,",person,"Wali Shakur,Ahmed Doha,Abu Ayyash,Doha,Ayyash,Shakur,",0.01984924980782137500
+854,place,"USA,Pakistan,New Jersey,224 Paulson Ave.,Clifton,",person,"Adnan Hijazi,Hijazi,Wali Shakur,Ahmed Doha,Abu Ayyash,Doha,Ayyash,Shakur,",0.01689498603053862800
+855,place,"USA,22 Hoveniersstraat,Antwerp,Belgium,New Jersey,Newark,",person,"Adnan Hijazi,Hijazi,Pieter Dopple,HIjazi,A. Hijazi,",0.00596887780174299400
+856,place,"USA,New Jersey,Columbia,224 Paulson Ave.,Clifton,231 12th St.,Missouri,",person,"Wali Shakur,Ahmed Doha,Abu Ayyash,Doha,Ayyash,wshakur,",0.00538733748108070400
+857,place,"811 Tecumseh Rd.,Windsor,Ontario,Canada,Detroit,Michigan,562 Fenkell Ave.,",person,"Rifai Qasim,Abdul al Nami,Raeed Beandali,al Nami,Satam Derwish,Derwish,Ronald,Satam,Ralph bean,",0.03808134518732376000
+858,place,"811 Tecumseh Rd.,Windsor,Ontario,Canada,Detroit,Michigan,",person,"Rifai Qasim,Abdul al Nami,Raeed Beandali,al Nami,Abdul,R. Derwish,Satam Derwish,Derwish,Ronald,Ronald Derwish,Satam,Ali,Ralph bean,",0.02914675027029537500
+859,place,"Windsor,Ontario,Canada,Detroit,Michigan,",person,"Rifai Qasim,Abdul al Nami,Raeed Beandali,al Nami,Abdul,R. Derwish,Satam Derwish,Derwish,Ronald,Ronald Derwish,J. T.,A. H.,M. M.,Mousa Salah,Shadi abu Hoshar,April Stevens,Salah,Stevens,Abu Somad,Yazid Bafaba,Khaled Jehani,Satam,Ali,Ralph bean,",0.02116522806396874800
+860,place,"Egypt,Afghanistan,Pakhtia,Khost,Jorm,Taloqan,Salang tunnel,",person,"Saeed Hasham,Yasir Salman,Badawi,Hamid Qatada,Khalid Taha,Osama bin Laden,",0.00392378419698576700
+861,place,"Casablanca,Peshawar,Pakistan,Karachi,Islamabad,Marocco,Hyderabad,",person,"Yasir Salman,Ali Talib,Abu Adil,Omar al Banna,Nadia Mahfouz,Ali Mishal,Abdel Noufal,Ahmad Miner,Jamat Syeed,Shukri Azzam,Nidal Awad,",0.00000000000000000000
+862,place,"811 Tecumseh Rd.,Windsor,Ontario,Canada,Morocco,Marrakech,",person,"Abdul al Nami,al Nami,Abdul,R. Derwish,rder3,Satam Derwish,Derwish,Ronald,Satam,Ali,",0.00315092436301230670
+863,place,"Windsor,Ontario,Canada,Morocco,Marrakech,",person,"Abdul al Nami,al Nami,Abdul,R. Derwish,rder3,Satam Derwish,Derwish,Ronald,Khaled Jehani,Satam,Ali,",0.00352530062816726000
+864,place,"USA,Charlotte,North Carolina,3131 Western Ave.,Dubai,UAE,",person,"Rifai Qasim,Omar Blakely,Muhammed Mustafa,Blakely,Mustafa,",0.04669220925083501000
+865,place,"USA,Cuba,Havana,Moscow,Russia,Soviet Union,",person,"Bugarov,Boris Bugarov,Grigory Sizov,Castro,Sizov,",0.33330214286181037000
+866,place,"Pakistan,Afghanistan,Chitral,Khost,Asadabad,",person,"Saeed Hasham,Kamal Abdullah,Ali Sittah,Talat Rushdi,Abdullah,",0.00016943227446818712
+867,place,"USA,Florida,Miami,Bahamas,Nassau,",person,"Omar Hanif,Hanif,Muhammed Dandani,Dandani,Said Khadr,Khadr,",0.00090645005605189120
+868,place,"Pakistan,631 Nishtar Rd.,Karachi,Chitral,Gwadar,",person,"Abdul Jabarah,Fahd Jehani,Ramzi al Shibh,S. H.,Moataz,",0.05349948375825851000
+869,place,"USA,Texas,Houston,Kansas City,Almeda-Genoa Rd,",person,"Khalid Shamrani,Shamrani,Walter Smith,Billy Jack Hawkins,Slade Goodman,al Quso,Hafs,Halfs,",0.00667164581336472100
+870,place,"USA,Morocco,Casablanca,Afghanistan,Caribbean,",person,"Abdellah Atmani,Atmani,Mohamed Essabar,A. Atmani,Essabar,",0.11781224956285129000

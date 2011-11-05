@@ -1,0 +1,14 @@
+- Group together overlapping nodes into a single node
+- When the user clicks on this node, just show level 2 for the node in this group with the highest derived coefficient
+- No need to show links
+
+- Source v/s Destination?
+- Attribute specific views for View#1. If it is a date attribute, have a timeline view?
+
+
+
+======
+
+- set minimum size of node
+- size of node denotes the no. of rows and columns in bicluster
+- user color to denote strength of connection?

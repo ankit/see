@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Visualizing Biclusters in Atlantic Storm Data Set</title>
+    <script type="text/javascript" src="libs/d3/d3.min.js"></script>
+    <script type="text/javascript" src="libs/d3/d3.layout.min.js"></script>
+    <script type="text/javascript" src="libs/d3/d3.geom.min.js"></script>
+    <script type="text/javascript" src="libs/d3/d3.csv.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="libs/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="libs/jquery.event.drag.min.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="see.js"></script>
+    <link rel="stylesheet" href="see.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body>
+    <div id="viz">
+      <div id="header" class="title"></div>
+      <div id="editor">
+        <label>Data: </label>
+        <select id="dataSelector">
+        </select>
+        <br><br>
+        <label>Entity: </label>
+        <select id="entitySelector">
+        </select>
+        <br><br>
+        <label>Connected Entities: </label>
+        <br><br>
+        <div id="entityFilters">
+        </div>
+      </div>
+    </div>
+    <div id="tooltipContainer">
+    </div>
+    <div id="loading">
+      <img src="images/ajax-loader.gif" /><br>
+      See is loading...<br><br>
+    </div>
+    <div id="footer">
+      See is a tool to visualize biclusters. Currently, we are testing it with two sample data sets. <br>
+      See works best on latest versions of Chrome and Safari.
+    </div>
+  </body>
+</html>

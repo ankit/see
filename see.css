@@ -1,0 +1,138 @@
+* {
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.nodetext {
+  pointer-events: none;
+  font-size: 12px;
+}
+
+.groupLabel {
+  font-size: 12px;
+  fill: #555;
+}
+
+circle.circle {
+  cursor: pointer;
+  stroke-width: 2px;
+}
+
+circle.selected {
+  stroke-width: 3px !important;
+  stroke: red !important;
+}
+
+line.link {
+  stroke: #ccc;
+}
+
+#tooltipContainer {
+  position: absolute;
+  z-index: 10;
+  left: 20px;
+  top: 80px;
+  margin-right: 50px;
+}
+
+.tooltip {
+  background: rgba(250, 250, 250, 0.9);
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 10px;
+  color: #555;
+  font-size: 10px;
+  visibility: hidden;
+}
+
+td {
+  margin: 0;
+  padding: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-right: 1px solid #ccc;
+}
+
+td.highlighted {
+  background-color: #333;
+  color: #fff;
+}
+
+td:nth-child(1) {
+  padding-left: 0;
+}
+
+td:last-child {
+  border-right: none;
+}
+
+th {
+  margin-bottom: 10px;
+}
+
+#header {
+  position: absolute;
+  left: 10px;
+  top: 2;
+  padding: 10px;
+  width: 90%;
+}
+
+.title {
+  color: #ccc;
+  font-size: 24px;
+  text-transform: capitalize;
+}
+
+#editor {
+  position: absolute;
+  right: 0;
+  padding: 10px;
+  margin-right: 20px;
+  border: 1px solid #eee;
+  background-color: rgba(250, 250, 250, 0.9);
+  border-radius: 5px;
+  width: 180px;
+  cursor: move;
+}
+
+#editor label {
+  color: #333;
+  font-size: 12px;
+  width: 200px;
+}
+
+#editor input[type=checkbox] {
+  margin-right: 5px;
+}
+
+#viz {
+  height: 100%;
+  clear: both;
+  overflow: auto;
+  height: 100%;
+}
+
+#footer {
+  color: #555;
+  margin-top: -20px;
+  font-size: 11px;
+  padding-bottom: 20px;
+  text-align: center;
+  line-height: 15px;
+}
+
+#loading {
+  top: 45%;
+  left: 5%;
+  position: absolute;
+  display: block;
+  height: 250px;
+  width: 90%;
+  text-align: center;
+  color: #888;
+  font-size: 26px;
+}
+
+.toggleEntityLabel {
+  display: block;
+}
