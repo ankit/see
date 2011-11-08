@@ -1,8 +1,10 @@
 #See
 
-See is a visualization tool to explore [bicluster](http://en.wikipedia.org/wiki/Biclustering) connections. Currently we are testing the tool with only two data sets (Crescent and Atlantic Storm).
+See is a visualization tool to explore [bicluster](http://en.wikipedia.org/wiki/Biclustering) connections. 
 
-It is built using the awesome [d3](http://mbostock.github.com/d3/) library!
+##Implementation
+
+We currently visualize datasets that are output from the Minevis data format. The data is loaded into MySQL and we use the ORM code within the preprocessing/ folder to flatten the database of biclusters and bicluster connections into CSV files that can then be read using javascript. We use the [d3](http://mbostock.github.com/d3/) library for javascript visualization. 
 
 ##Code Styling Rules
 
