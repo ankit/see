@@ -10,15 +10,29 @@ import java.util.List;
 
 // TODO only allow most of these methods to be seen from Cache and Bicluster
 public class DBUtils {
+
+	// Use atlantic storm or crescent
+	private static final boolean USE_CRESCENT = false;
+
+	public static int MINING_ID = -1;
+	public static int CHAINING_ID = -1;
+	public static String SYMFONY = "";
+
+	static {
+		if (USE_CRESCENT) {
+			MINING_ID = 2;
+			CHAINING_ID = 2;
+			SYMFONY = "symfony_crescent";
+		} else {
+			MINING_ID = 2;
+			CHAINING_ID = 3;
+			SYMFONY = "as_symfony";
+		}
+	}
+
 	private static final boolean DEBUG = false;
 	private static String dbUrl = "jdbc:mysql://localhost/?user=root&password=";
 	private static Connection conn = null;
-	public static final int MINING_ID = 2; // ID from symfony.mining that we
-											// care for
-	public static final int CHAINING_ID = 2; // ID from symfony.chaining that we
-												// care
-	// for
-	public static final String SYMFONY = "symfony_crescent";
 
 	private static void ensureConnection() {
 		try {
@@ -58,6 +72,7 @@ public class DBUtils {
 			stmt = conn.createStatement();
 			result = stmt.executeQuery(query);
 		} catch (SQLException e) {
+			System.err.println("Query was " + query);
 			e.printStackTrace();
 		}
 

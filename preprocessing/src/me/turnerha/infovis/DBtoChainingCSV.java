@@ -25,10 +25,10 @@ public class DBtoChainingCSV {
 			File chaining = new File("chaining.csv");
 			FileWriter writer = new FileWriter(chaining);
 
-			writer.write("Link Id, Link Type, Source Id, Row "
-					+ "Type, Source Rows, Column Type, Source "
-					+ "Columns, Destination Id, Row Type, "
-					+ "Destination Rows, Column Type, Destination "
+			writer.write("Link Id, Link Type, Source Id, Source Row "
+					+ "Type, Source Rows, Source Column Type, Source "
+					+ "Columns, Destination Id, Destination Row Type, "
+					+ "Destination Rows, Destination Column Type, Destination "
 					+ "Columns\n");
 
 			for (Bicluster cluster : Bicluster.getAllBiclusters()) {
@@ -39,8 +39,8 @@ public class DBtoChainingCSV {
 						+ row.getName() + " <> " + col.getName());
 
 				for (Link link : cluster.getAllLinks()) {
-					//if (link.isOverlapLink())
-					//	continue;
+					// if (link.isOverlapLink())
+					// continue;
 
 					if (link.getTarget() != cluster)
 						System.err.println("WTF");
@@ -82,20 +82,20 @@ public class DBtoChainingCSV {
 					// Dest ID
 					writer.write("" + chd.getBiclusterId());
 					writer.append(',');
-					
+
 					// Dest Row Type
 					writer.append(row.getName());
 					writer.append(",\"");
-					
+
 					// Dest Row values
 					for (String val : row.getValues())
 						writer.append(val).append(',');
 					writer.append("\",");
-					
+
 					// Dest Col type
 					writer.append(col.getName());
 					writer.append(",\"");
-					
+
 					// Dest Col Values
 					for (String val : col.getValues())
 						writer.write(val + ",");
@@ -103,7 +103,7 @@ public class DBtoChainingCSV {
 
 					// Final endline
 					writer.write("\n");
-					
+
 					if (DEBUG) {
 						System.out.println("\tConnected with "
 								+ chd.getBiclusterId() + ": " + row.getName()
