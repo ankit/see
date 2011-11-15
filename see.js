@@ -609,7 +609,7 @@ See.prototype.crunchBiclusterConnections = function(selectedNode) {
 
   // push the selected node first
   self.nodes.push(selectedNode);
-  self.nodes[0].setGroup(0);
+  self.nodes[0].group = 0;
   var groups = [];
   groups.push({
     rowType: selectedNode.rowType,
@@ -909,56 +909,9 @@ See.prototype.biclusterHTML = function(d) {
   return html;
 }
 
-// Create a bicluster node. Does cleanup and sets up the bNode
-var BiclusterNode = function(id, rowType, columnType, rowStr, columnStr, weight, group, children) {
-  this.id         = id,
-  this.rowType    = rowType,
-  this.columnType = columnType,
-  this.rows       = this.buildArrayFromString(rowStr),
-  this.columns    = this.buildArrayFromString(columnStr),
-  this.dWeight    = weight,
-  this.group      = group ? group : 0,
-  this.children   = children ? children : []
-}
-
-// Builds the row/column array from , separated string. Does some cleanup (removes duplicates, last empty element, etc.)
-BiclusterNode.prototype.buildArrayFromString = function(str) {
-  if (str) {
-    var arr = str.trim().split(',').removeDuplicates();
-    // if last element is empty, get rid of it
-    if (arr[arr.length - 1] == "")
-      arr.splice(arr.length - 1, 1);
-    return arr;
-  }
-  else
-    return [];
-}
-
-BiclusterNode.prototype.setGroup = function(aGroup) {
-  this.group = aGroup;
-}
-
-BiclusterNode.prototype.addChild = function(node) {
-  this.children.push(node);
-}
-
 // Helper Methods
 String.prototype.trim = function() {
   return this.replace(/^\s\s*/, '').replace(/\s\s,*$/, '');
-};
-
-Array.prototype.removeDuplicates = function() {
-  var i, len = this.length, out = [], obj = {};
-
-  for (i = 0;i < len; i++) {
-    obj[this[i]] = 0;
-  }
-
-  for (i in obj) {
-    out.push(i);
-  }
-
-  return out;
 };
 
 // do the thing
