@@ -30,6 +30,7 @@ var See = function() {
       columns: " Array of Columns",
       weight: " Importance"
     },
+
     chaining: {
       id: "Link Id",
       type: " Link Type",
@@ -99,7 +100,6 @@ var See = function() {
 
   this.props = {
     fill: d3.scale.category10(),
-    r: d3.scale.sqrt().domain([0, 1000]).range([3, 25]),
     fontSize: d3.scale.sqrt().domain([0, 200]).range([0, 40]),
     textPadding: {x: 20, y: 10},
     fadeDuration: 500,
@@ -213,7 +213,7 @@ See.prototype.updateCoordinates = function() {
   // todo: extend this on the basis of individual cluster sizes, so that a cluster is not hidden
   if (this.nodes.length <= 100) {
     this.props.charge = -200;
-    this.props.r = d3.scale.sqrt().domain([0, 1000]).range([0, 100]);
+    this.props.r = d3.scale.sqrt().domain([0, 1000]).range([4, 120]);
     this.coord.x = 200;
     this.coord.y = 300;
     this.coord.dx = 200;
@@ -222,7 +222,7 @@ See.prototype.updateCoordinates = function() {
   }
   else if (this.nodes.length > 100 && this.nodes.length < 500) {
     this.props.charge = -40;
-    this.props.r = d3.scale.sqrt().domain([0, 1000]).range([0, 50]);
+    this.props.r = d3.scale.sqrt().domain([0, 1000]).range([1.8, 60]);
     this.coord.x = 200;
     this.coord.y = 250;
     this.coord.dx = 200;
@@ -231,7 +231,7 @@ See.prototype.updateCoordinates = function() {
   }
   else if (this.nodes.length >= 500 && this.nodes.length < 1000) {
     this.props.charge = -30;
-    this.props.r = d3.scale.sqrt().domain([0, 1000]).range([0, 40]);
+    this.props.r = d3.scale.sqrt().domain([0, 1000]).range([1.5, 100]);
     this.coord.x = 300;
     this.coord.y = 180;
     this.coord.dx = 200;
@@ -240,12 +240,12 @@ See.prototype.updateCoordinates = function() {
    }
    else if (this.nodes.length >= 1000) {
      this.props.charge = -20;
-     this.props.r = d3.scale.sqrt().domain([0, 1000]).range([0, 20]);
+     this.props.r = d3.scale.sqrt().domain([0, 1000]).range([1.2, 100]);
      this.coord.x = 200;
      this.coord.y = 350;
      this.coord.dx = 250;
      this.coord.dy = 100;
-     this.props.gravity = 0.2;
+     this.props.gravity = 0.1;
    }
 }
 
@@ -553,15 +553,13 @@ See.prototype.crunchBiclusterNodes = function(data) {
       });
     }
 
-    self.nodes.push(
-      new BiclusterNode(row[self.headers.mining.id],
-        row[self.headers.mining.rowType],
-        row[self.headers.mining.columnType],
-        row[self.headers.mining.rows],
-        row[self.headers.mining.columns],
-        row[self.headers.mining.weight],
-        groupId)
-    );
+    self.nodes.push(new BiclusterNode(row[self.headers.mining.id],
+      row[self.headers.mining.rowType],
+      row[self.headers.mining.columnType],
+      row[self.headers.mining.rows],
+      row[self.headers.mining.columns],
+      row[self.headers.mining.weight],
+      groupId));
 
     // cache the weight value in self.weights
     self.weights[row[self.headers.mining.id]] = row[self.headers.mining.weight];
@@ -612,31 +610,51 @@ See.prototype.crunchBiclusterConnections = function(selectedNode) {
   self.nodes[0].group = 0;
   var groups = [];
   groups.push({
-    rowType: selectedNode.rowType,
-    columnType: selectedNode.columnType
+    firstType: selectedNode.rowType,
+    secondType: selectedNode.columnType,
+    thirdType: null
   });
 
   var links = self.datasets[self.selectedDataset].cache.links;
 
   // add all connected biclusters as children to the selected bicluster
   links.forEach(function (link) {
-    var biclusterHeader;
+    var linkedBiclusterHeader;
 
     if (link[self.headers.chaining.source.id] == selectedNode.id)
-      biclusterHeader = self.headers.chaining.destination;
+      linkedBiclusterHeader = self.headers.chaining.destination;
     else if (link[self.headers.chaining.destination.id] == selectedNode.id)
-      biclusterHeader = self.headers.chaining.source;
+      linkedBiclusterHeader = self.headers.chaining.source;
 
-    if (biclusterHeader) {
+    if (linkedBiclusterHeader) {
       var groupId = 0;
       var wasGroupFound = false;
       var groupsLength = groups.length;
+      var linkRowType = link[linkedBiclusterHeader.rowType];
+      var linkColumnType = link[linkedBiclusterHeader.columnType];
+      var thirdType = null;
+
+      if (selectedNode.rowType == linkRowType) {
+        if (selectedNode.columnType != linkColumnType) {
+          thirdType = linkColumnType;
+        }
+      } else if (selectedNode.rowType == linkColumnType) {
+        if (selectedNode.columnType != linkRowType) {
+          thirdType = linkRowType;
+        }
+      } else if (selectedNode.columnType == linkColumnType) {
+        if (selectedNode.rowType != linkRowType) {
+          thirdType = linkRowType;
+      } else if (selectedNode.columnType == linkRowType) {
+        if (selectedNode.rowType != linkColumnType) {
+          thirdType = linkColumnType;
+        }
+      }
 
       for (var j = 0; j < groupsLength; j ++) {
         var group = groups[j];
 
-        if (group.rowType == link[biclusterHeader.rowType]
-          && group.columnType == link[biclusterHeader.columnType]) {
+        if (thirdType === group.thirdType) {
           wasGroupFound = true;
           groupId = j;
           break;
@@ -645,18 +663,19 @@ See.prototype.crunchBiclusterConnections = function(selectedNode) {
 
       if (!wasGroupFound) {
         groups.push({
-          rowType: link[biclusterHeader.rowType],
-          columnType: link[biclusterHeader.columnType]
+          firstType: selectedNode.rowType,
+          secondType: selectedNode.columnType,
+          thirdType: thirdType
         });
       }
 
       var newNode = new BiclusterNode(
-        link[biclusterHeader.id],
-        link[biclusterHeader.rowType],
-        link[biclusterHeader.columnType],
-        link[biclusterHeader.rows],
-        link[biclusterHeader.columns],
-        self.weights[link[biclusterHeader.id]],
+        link[linkedBiclusterHeader.id],
+        link[linkedBiclusterHeader.rowType],
+        link[linkedBiclusterHeader.columnType],
+        link[linkedBiclusterHeader.rows],
+        link[linkedBiclusterHeader.columns],
+        self.weights[link[linkedBiclusterHeader.id]],
         groupId);
 
       self.links.push({
@@ -910,6 +929,8 @@ See.prototype.biclusterHTML = function(d) {
 }
 
 // Helper Methods
+
+// Trims extra whitespace at the beginning / end of string
 String.prototype.trim = function() {
   return this.replace(/^\s\s*/, '').replace(/\s\s,*$/, '');
 };
