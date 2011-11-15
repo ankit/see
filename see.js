@@ -198,7 +198,6 @@ See.prototype.visualizeBicluster = function(d) {
   this.view = 1;
   this.crunchBiclusterConnections(d);
   this.draw();
-  this.force.charge(-120).gravity(0.2);
 }
 
 See.prototype.hideLoading = function() {
@@ -267,10 +266,10 @@ See.prototype.draw = function() {
   // todo: Use Jaccard's coefficient (or something similar) here, instead of node weight for link strength
   // this is for the second view (when visualizing individual bicluster connections)
   .linkStrength(function(d) {
-    if (d.target.dWeight == undefined)
+    if (d.target.cWeight == undefined)
       return 0.1;
     else
-      return d.target.dWeight;
+      return d.target.cWeight;
   })
   .start();
 
@@ -300,7 +299,11 @@ See.prototype.draw = function() {
     .style("stroke", function(d) {
       return d3.rgb(self.props.fill(d.group)).darker(1); } )
     .style("stroke-width", function(d) {
-    return 1; } )
+      if (self.selectedNode && d.id == self.selectedNode.id)
+        return 10;
+      else
+        return 1;
+    } )
     // Fade out/remove any circles for deleted nodes
     .exit()
     .transition()
@@ -599,21 +602,33 @@ See.prototype.crunchFoci = function() {
 See.prototype.crunchBiclusterConnections = function(selectedNode) {
   var self = this;
 
-  // reset existing data
-  self.groups = [];
+  // reset all data
   self.foci = [];
   self.nodes = [];
   self.links = [];
 
+  // remove all groups following the group of the selectedNode
+  // this is a hack to keep the same color of selectedNode
+  var groups = self.groups.slice(0, selectedNode.group);
+  var startGroupIndex = selectedNode.group;
+  // reset groups data
+  self.groups = [];
+  for (var i = 0; i < groups.length; i ++) {
+    groups[i] = {
+      firstType: -1,
+      secondType: -1,
+      thirdType: -1
+    }
+  }
+
   // push the selected node first
   self.nodes.push(selectedNode);
-  self.nodes[0].group = 0;
-  var groups = [];
-  groups.push({
+
+  groups[groups.length] = {
     firstType: selectedNode.rowType,
     secondType: selectedNode.columnType,
     thirdType: null
-  });
+  };
 
   var links = self.datasets[self.selectedDataset].cache.links;
 
@@ -635,23 +650,20 @@ See.prototype.crunchBiclusterConnections = function(selectedNode) {
       var thirdType = null;
 
       if (selectedNode.rowType == linkRowType) {
-        if (selectedNode.columnType != linkColumnType) {
+        if (selectedNode.columnType != linkColumnType)
           thirdType = linkColumnType;
-        }
       } else if (selectedNode.rowType == linkColumnType) {
-        if (selectedNode.columnType != linkRowType) {
+        if (selectedNode.columnType != linkRowType)
           thirdType = linkRowType;
-        }
       } else if (selectedNode.columnType == linkColumnType) {
-        if (selectedNode.rowType != linkRowType) {
+        if (selectedNode.rowType != linkRowType)
           thirdType = linkRowType;
       } else if (selectedNode.columnType == linkRowType) {
-        if (selectedNode.rowType != linkColumnType) {
+        if (selectedNode.rowType != linkColumnType)
           thirdType = linkColumnType;
-        }
       }
 
-      for (var j = 0; j < groupsLength; j ++) {
+      for (var j = startGroupIndex; j < groupsLength; j ++) {
         var group = groups[j];
 
         if (thirdType === group.thirdType) {
@@ -677,6 +689,8 @@ See.prototype.crunchBiclusterConnections = function(selectedNode) {
         link[linkedBiclusterHeader.columns],
         self.weights[link[linkedBiclusterHeader.id]],
         groupId);
+
+      newNode.cWeight = self.crunchBiclusterConnectionStrength(selectedNode, newNode);
 
       self.links.push({
         source: self.nodes[0],
@@ -716,6 +730,46 @@ See.prototype.crunchBiclusterWeights = function(data) {
       }
     }
   });
+}
+
+// Calculate the Jaccardi's coefficient for a link
+// For now, it is just the no. of common entities in the source and destination bicluster
+See.prototype.crunchBiclusterConnectionStrength = function(srcNode, destNode) {
+  var strength = 0;
+
+  if (srcNode.rowType === destNode.rowType)
+    strength = getStrength(srcNode.rows, destNode.rows);
+  else if (srcNode.rowType === destNode.columnType)
+    strength = getStrength(srcNode.rows, destNode.columns);
+
+  if (srcNode.columnType === destNode.rowType)
+    strength = (strength + getStrength(srcNode.columns, destNode.rows)) / 2;
+  else if (srcNode.columnType === destNode.columnType)
+    strength = (strength + getStrength(srcNode.columns, destNode.columns)) / 2;
+
+  console.log(strength);
+  return strength;
+
+  function getStrength(arr_1, arr_2) {
+    var set_1 = arr_1;
+    // create a copy of arr_2, since we are going to reduce its size
+    var set_2 = arr_2.slice(0);
+    var w = 0;
+    var total = set_1.length + set_2.length;
+    var len_1 = set_1.length;
+    for (var i = 0; i < len_1; i ++) {
+      var len_2 = set_2.length;
+      for (var j = 0; j < len_2; j ++) {
+        if (set_1[i] === set_2[j]) {
+          w ++;
+          // We can remove this entity, since there are no duplicate entities
+          set_2.splice(j, 1);
+          break;
+        }
+      }
+    }
+    return w / (total - w);
+  }
 }
 
 // Initialize and create the DIV which will contain selected bicluster(s) content

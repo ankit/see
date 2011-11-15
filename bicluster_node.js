@@ -1,5 +1,5 @@
 // Constructor for a Bicluster node
-var BiclusterNode = function(id, rowType, columnType, rowStr, columnStr, weight, group, children) {
+var BiclusterNode = function(id, rowType, columnType, rowStr, columnStr, weight, group, children, connectionWeight) {
 
   // private
 
@@ -43,6 +43,7 @@ var BiclusterNode = function(id, rowType, columnType, rowStr, columnStr, weight,
   this.dWeight    = weight,
   this.group      = group ? group : 0,
   this.children   = children ? children : []
+  this.cWeight    = connectionWeight ? connectionWeight : 0;
 }
 
 BiclusterNode.prototype.addChild = function(node) {
