@@ -456,13 +456,19 @@ See.prototype.selectNode = function(d, circle) {
     self.visualizeBicluster(d);
     self.showDetailView(d);
     self.attachEscapeListener(self);
-    d3.selectAll(".selected").classed("selected", false);
+    d3.selectAll(".selected")
+    .style("stroke", function(d) {
+      return d3.rgb(self.props.fill(d.group)).darker(1); } )
+    .classed("selected", false);
   }
   else {
     self.selectedConnection = d;
     self.showConnectionView(d);
     d3.selectAll(".selected").classed("selected", false);
-    circle.classed("selected", true);
+    circle
+    .style("stroke", function(d) {
+      return d3.rgb(self.props.fill(d.group)).darker(3); } )
+    .classed("selected", true);
   }
 }
 
@@ -473,7 +479,10 @@ See.prototype.deselectNode = function(circle) {
     self.selectedNode = null;
   else
     self.selectedConnection = null;
-  circle.classed("selected", false);
+  circle
+  .style("stroke", function(d) {
+    return d3.rgb(self.props.fill(d.group)).darker(1); } )
+  .classed("selected", false);
 }
 
 See.prototype.onNodeMouseover = function(d) {

@@ -18,8 +18,7 @@ circle.circle {
 }
 
 circle.selected {
-  stroke-width: 3px !important;
-  stroke: red !important;
+  stroke-width: 5px !important;
 }
 
 line.link {
