@@ -8,7 +8,8 @@ var See = function() {
   this.weights = [],
   this.force,
   this.vis,
-  this.entity,
+  this.selectedEntity,
+  this.selectedEntityType,
   this.selectedNode = null,
   this.selectedConnection = null,
   this.view = 0,
@@ -99,7 +100,7 @@ var See = function() {
   },
 
   this.props = {
-    fill: d3.scale.category10(),
+    fill: d3.scale.category20(),
     fontSize: d3.scale.sqrt().domain([0, 200]).range([0, 40]),
     textPadding: {x: 20, y: 10},
     fadeDuration: 500,
@@ -127,7 +128,7 @@ See.prototype.reset = function() {
   this.selectedNode = null;
   this.selectedConnection = null;
   this.hideDetailView();
-  this.visualizeEntity(this.entity);
+  this.visualizeEntityType(this.selectedEntityType);
   this.detachEscapeListener(this);
 }
 
@@ -136,21 +137,26 @@ See.prototype.visualizeDataset = function(dataset) {
   this.selectedDataset = dataset;
   this.selectedEntities = this.datasets[this.selectedDataset].entityTypes;
   this.drawEditor();
-  this.visualizeEntity(this.datasets[dataset].entityTypes[0]);
-  this.updateHeader();
+  this.visualizeAllEntities();
+  this.updateHeader(this.selectedDataset + " " + this.selectedEntityType + " Biclusters");
+}
+
+See.prototype.visualizeAllEntities = function() {
+  this.visualizeEntityType("all");
 }
 
 // Visualize a specific entity
-See.prototype.visualizeEntity = function(anEntity) {
+See.prototype.visualizeEntityType = function(anEntityType) {
   var self = this;
+  self.updateHeader(self.selectedDataset + " " + anEntityType + " Biclusters");
   self.view = 0;
 
-  if (anEntity)
-    self.entity = anEntity;
+  if (anEntityType)
+    self.selectedEntityType = anEntityType;
 
   // Remove the checkbox for the entity we are viewing
   $(".toggleEntityLabel").show();
-  $("#toggleEntity" + anEntity).hide();
+  $("#toggleEntity" + anEntityType).hide();
 
   var cache = self.datasets[self.selectedDataset].cache;
 
@@ -194,9 +200,14 @@ See.prototype.visualizeEntity = function(anEntity) {
   }
 }
 
-See.prototype.visualizeBicluster = function(d) {
+See.prototype.visualizeEntity = function(anEntity) {
+
+}
+
+See.prototype.visualizeBiclusterConnections = function(d) {
   this.view = 1;
   this.crunchBiclusterConnections(d);
+  this.updateHeader("Biclusters Connected To:");
   this.draw();
 }
 
@@ -204,8 +215,8 @@ See.prototype.hideLoading = function() {
   $("#loading").fadeOut(this.props.fadeDuration);
 }
 
-See.prototype.updateHeader = function() {
-  $("#header").text(this.selectedDataset + " " + this.entity + " Biclusters");
+See.prototype.updateHeader = function(text) {
+  $("#header").text(text);
 }
 
 See.prototype.updateCoordinates = function() {
@@ -244,7 +255,7 @@ See.prototype.updateCoordinates = function() {
      this.coord.y = 350;
      this.coord.dx = 250;
      this.coord.dy = 100;
-     this.props.gravity = 0.1;
+     this.props.gravity = 0.3;
    }
 }
 
@@ -253,7 +264,7 @@ See.prototype.draw = function() {
   var self = this;
 
   self.updateCoordinates();
-  self.updateHeader();
+
   self.drawGroupLabels();
 
   // Start simulation to lay out nodes
@@ -353,7 +364,7 @@ See.prototype.drawEditor = function() {
   }
 
   var entitySelectorHTML = function() {
-    var html = "";
+    var html = "<option value='all'>all</option>";
     for (var i = 0; i < len; i ++)
       html += "<option value = '" + entityTypes[i] +"'>" + entityTypes[i] + "</option>";
     return html;
@@ -404,7 +415,7 @@ See.prototype.drawEditor = function() {
 
     // attach event to entity selector
     entitySelector.on("change", function(e) {
-      self.visualizeEntity(this.value);
+      self.visualizeEntityType(this.value);
     });
 
     // add the data sets. they only need to intialized once
@@ -419,11 +430,12 @@ See.prototype.drawEditor = function() {
 See.prototype.drawGroupLabels = function() {
   var self = this;
   $(".groupLabel").remove();
-
-  // todo: come up with better placement algorithm for group labels
-  var len = self.groups.length;
-  for (var i = 0; i < len; i ++)
-    self.drawGroupLabel(self.groups[i], self.foci[i].x, self.foci[i].y);
+  if (self.selectedEntityType != "all") {
+    // todo: come up with better placement algorithm for group labels
+    var len = self.groups.length;
+    for (var i = 0; i < len; i ++)
+      self.drawGroupLabel(self.groups[i], self.foci[i].x, self.foci[i].y);
+  }
 }
 
 See.prototype.drawGroupLabel = function(group, x, y) {
@@ -434,7 +446,7 @@ See.prototype.drawGroupLabel = function(group, x, y) {
   .attr("class", "groupLabel")
   .attr("dx", x)
   .attr("dy", y)
-  .text((group.rowType == self.entity) ? group.columnType : group.rowType);
+  .text((group.rowType == self.selectedEntityType) ? group.columnType : group.rowType);
 }
 
 // Events
@@ -453,7 +465,7 @@ See.prototype.selectNode = function(d, circle) {
   var self = this;
   if (self.view == 0) {
     self.selectedNode = d;
-    self.visualizeBicluster(d);
+    self.visualizeBiclusterConnections(d);
     self.showDetailView(d);
     self.attachEscapeListener(self);
     d3.selectAll(".selected")
@@ -530,17 +542,25 @@ See.prototype.crunchBiclusterNodes = function(data) {
   var d_len = data.length;
 
   data.forEach(function (row) {
-    // Row is the selected entity and the column type is checked
-    var case1 = (row[self.headers.mining.rowType] == self.entity
-    && self.selectedEntities.indexOf(row[self.headers.mining.columnType]) != -1);
+    if (self.selectedEntityType != "all") {
+      // Row is the selected entity and the column type is checked
+      var case1 = (row[self.headers.mining.rowType] == self.selectedEntityType
+      && self.selectedEntities.indexOf(row[self.headers.mining.columnType]) != -1);
 
-    // Column is the selected entity and the row type is checked
-    var case2 = (row[self.headers.mining.columnType] == self.entity
-      &&  self.selectedEntities.indexOf(row[self.headers.mining.rowType]) != -1);
+      // Column is the selected entity and the row type is checked
+      var case2 = (row[self.headers.mining.columnType] == self.selectedEntityType
+        && self.selectedEntities.indexOf(row[self.headers.mining.rowType]) != -1);
 
-    // If neither is true, then we don't want to add this row to our
-    // data structures b/c it doesn't match set the filters
-    if (!(case1 || case2)) return;
+      // If neither is true, then we don't want to add this row to our
+      // data structures b/c it doesn't match set the filters
+      if (!(case1 || case2)) return;
+    }
+    else {
+      if (self.selectedEntities.indexOf(row[self.headers.mining.columnType]) == -1 ||
+        self.selectedEntities.indexOf(row[self.headers.mining.rowType]) == -1) {
+          return;
+        }
+    }
 
     var groupId = 0;
     var wasGroupFound = false;
@@ -549,8 +569,14 @@ See.prototype.crunchBiclusterNodes = function(data) {
     for (var j = 0; j < groupsLength; j ++) {
       var group = self.groups[j];
 
-      if (group.rowType == row[self.headers.mining.rowType]
-        && group.columnType == row[self.headers.mining.columnType]) {
+      if ((self.selectedEntityType !== "all" && group.rowType == row[self.headers.mining.rowType]
+        && group.columnType == row[self.headers.mining.columnType]) ||
+        (self.selectedEntityType === "all" &&
+        ((group.rowType == row[self.headers.mining.rowType]
+        && group.columnType == row[self.headers.mining.columnType]) ||
+        (group.rowType == row[self.headers.mining.columnType]
+        && group.columnType == row[self.headers.mining.rowType])
+        ))) {
         wasGroupFound = true;
         groupId = j;
         break;
@@ -565,6 +591,8 @@ See.prototype.crunchBiclusterNodes = function(data) {
       });
     }
 
+    self.groups[j].childrenCount ++;
+
     self.nodes.push(new BiclusterNode(row[self.headers.mining.id],
       row[self.headers.mining.rowType],
       row[self.headers.mining.columnType],
@@ -575,7 +603,6 @@ See.prototype.crunchBiclusterNodes = function(data) {
 
     // cache the weight value in self.weights
     self.weights[row[self.headers.mining.id]] = row[self.headers.mining.weight];
-    self.groups[j].childrenCount ++;
   });
 
   self.crunchFoci();
@@ -591,13 +618,25 @@ See.prototype.crunchFoci = function() {
       x -= 100;
     }
 
-    if (i < 4) {
-      x += self.coord.x + (self.coord.dx * i);
-      y += self.coord.y;
+    if (self.selectedEntityType === "all") {
+      if (i < 10) {
+        x += self.coord.x + (80 * i);
+        y += self.coord.y;
+      }
+      else {
+        x += self.coord.x + (80 * (i - 10));
+        y += self.coord.y + self.coord.dy - 100;
+      }
     }
     else {
-      x += self.coord.x + (self.coord.dx * (i - 3));
-      y += self.coord.y + self.coord.dy;
+      if (i < 4) {
+        x += self.coord.x + (self.coord.dx * i);
+        y += self.coord.y;
+      }
+      else {
+        x += self.coord.x + (self.coord.dx * (i - 3));
+        y += self.coord.y + self.coord.dy;
+      }
     }
 
     self.foci.push({
@@ -799,14 +838,14 @@ See.prototype.showDetailView = function(d) {
     detailView = self.initDetailView();
 
   detailView
-  .style("visibility", "visible")
+  .style("display", "block")
   .html(self.biclusterHTML(d));
 }
 
 // Hides the contents of bicluster(s)
 See.prototype.hideDetailView = function() {
   d3.select("#detailView")
-  .style("visibility", "hidden");
+  .style("display", "none");
 }
 
 // Shows the contents of the selected biclusters
@@ -815,7 +854,7 @@ See.prototype.showConnectionView = function(d) {
 
   d3.select("#detailView")
   .html(self.biclusterConnectionHTML(self.selectedNode, d))
-  .style("visibility", "visible");
+  .style("display", "block");
 }
 
 // Returns the HTML table for the union of two biclusters b1 and b2. The common entities are highlighted
@@ -913,11 +952,11 @@ See.prototype.biclusterConnectionHTML = function(b1, b2) {
     types.push(type);
 
   // stick the selected entity to the first column
-  if (types[1] == self.entity) {
+  if (types[1] == self.selectedEntityType) {
     temp = types[1];
     types[1] = types[0];
     types[0] = temp;
-  } else if (types[2] && types[2] == self.entity) {
+  } else if (types[2] && types[2] == self.selectedEntityType) {
     temp = types[2];
     types[2] = types[0];
     types[0] = temp;
@@ -937,16 +976,11 @@ See.prototype.biclusterConnectionHTML = function(b1, b2) {
     var t_len = types.length;
     for (var j = 0; j < t_len; j ++) {
       var type = types[j];
-      if (entities[type][i]) {
-        if (entities[type][i].common)
-          html += "<td class='highlighted'>"
-        else
-          html += "<td>";
-        html += entities[type][i].value ? entities[type][i].value : entities[type][i];
-        html += "</td>";
-      } else {
-        html += "<td></td>";
-      }
+      if (entities[type][i])
+        html += self.biclusterEntityHTML(entities[type][i].value ? entities[type][i].value : entities[type][i],
+        entities[type][i].common);
+      else
+        html += self.biclusterEntityHTML(null);
     }
 
     html += "</tr>";
@@ -961,7 +995,7 @@ See.prototype.biclusterHTML = function(d) {
   var firstCol, secondCol;
   var html;
 
-  if (d.columnType == self.entity) {
+  if (d.columnType == self.selectedEntityType) {
     html = "<table><tr><th>" + d.columnType + "</th><th>" + d.rowType + "</th></tr>";
     firstCol = "columns";
     secondCol = "rows";
@@ -976,19 +1010,26 @@ See.prototype.biclusterHTML = function(d) {
 
   for (var i = 0; i < len; i ++) {
     html += "<tr>";
-    if (d[firstCol][i])
-      html += "<td>" + d[firstCol][i] + "</td>";
-    else
-      html += "<td></td>";
-    if (d[secondCol][i])
-      html += "<td>" + d[secondCol][i] + "</td>";
-    else
-      html += "<td></td>";
+    html += this.biclusterEntityHTML(d[firstCol][i]);
+    html += this.biclusterEntityHTML(d[secondCol][i]);
     html += "</tr>";
   }
 
   html += "</table>";
   return html;
+}
+
+// Returns a <td> row for an entity
+See.prototype.biclusterEntityHTML = function(value, highlighted) {
+  if (value) {
+    var html = "<td "
+    if (highlighted)
+      html += "class='highlighted' "
+     html += "title='Click to view biclusters containing " + value +"'>" + value + "</td>";
+     return html;
+  }
+  else
+    return "<td class='empty'></td>";
 }
 
 // Helper Methods

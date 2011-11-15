@@ -40,7 +40,6 @@ line.link {
   padding: 10px;
   color: #555;
   font-size: 10px;
-  visibility: hidden;
 }
 
 td {
@@ -51,9 +50,15 @@ td {
   border-right: 1px solid #ccc;
 }
 
-td.highlighted {
-  background-color: #333;
+td:not(.empty):hover {
   color: #fff;
+  background-color: #333;
+  cursor: pointer;
+}
+
+td.highlighted {
+  color: #fff;
+  background-color: #333;
 }
 
 td:nth-child(1) {
