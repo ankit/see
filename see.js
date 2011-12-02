@@ -1,58 +1,16 @@
 var See = function() {
   this.rootUrl = location.href,
-  this.nodes = [],
-  this.groups = [],
-  this.foci = [],
-  this.links = [],
-  // List of 'weights' for each bicluster, indexable using the bicluster id
-  this.weights = [],
   this.force,
   this.vis,
-  this.selectedEntity,
-  this.selectedEntityType,
-  this.selectedNode = null,
-  this.selectedConnection = null,
   this.view = 0,
 
-  this.coord = {
-    x: 200,
-    y: 150,
-    dx: 280,
-    dy: 300
-  },
-
-  // todo: whitespace ignorance should be built into code. CSV's are generally messy!
-  this.headers = {
-    mining: {
-      id: "BiCluster Id",
-      rowType: " Row Type",
-      columnType: " Column Type",
-      rows: " Array of Rows",
-      columns: " Array of Columns",
-      weight: " Importance"
-    },
-
-    chaining: {
-      id: "Link Id",
-      type: " Link Type",
-      source: {
-        id: " Source Id",
-        columns: " Source Columns",
-        rows: " Source Rows",
-        id: " Source Id",
-        rowType: " Source Row Type",
-        columnType: " Source Column Type"
-      },
-
-      destination: {
-        id: " Destination Id",
-        columns: " Destination Columns",
-        rows: " Destination Rows",
-        id: " Destination Id",
-        rowType: " Destination Row Type",
-        columnType: " Destination Column Type"
-      }
-    }
+  this.selection = {
+    entityName: null,
+    entityType: null,
+    dataset: null,
+    entities: [],
+    node: null,
+    connection: null
   },
 
   // todo: user should be able to provide any csv with the pre-defined headers,
@@ -70,7 +28,8 @@ var See = function() {
       ],
       cache: {
         biclusters: null,
-        links: null
+        links: null,
+        documents: null
       }
     },
 
@@ -85,14 +44,11 @@ var See = function() {
       ],
       cache: {
         biclusters: null,
-        links: null
+        links: null,
+        documents: null
       }
     }
   },
-
-  this.selectedDataset = "",
-
-  this.selectedEntities = [],
 
   this.size = {
     w: window.innerWidth - 20,
@@ -126,21 +82,21 @@ See.prototype.birth = function() {
 }
 
 See.prototype.reset = function() {
-  this.selectedNode = null;
-  this.selectedConnection = null;
+  this.selection.node = null;
+  this.selection.connection = null;
   this.hideDetailView();
   this.hideBackButton();
-  this.visualizeEntityType(this.selectedEntityType);
+  this.visualizeEntityType(this.selection.entityType);
   this.detachEscapeListener(this);
 }
 
 // Visualize a particular data set
 See.prototype.visualizeDataset = function(dataset) {
-  this.selectedDataset = dataset;
-  this.selectedEntities = this.datasets[this.selectedDataset].entityTypes;
+  this.selection.dataset = dataset;
+  this.selection.entities = this.datasets[this.selection.dataset].entityTypes;
   this.drawEditor();
   this.visualizeAllEntities();
-  this.header(this.selectedDataset + " " + this.selectedEntityType + " Biclusters");
+  this.header(this.selection.dataset + " " + this.selection.entityType + " Biclusters");
 }
 
 See.prototype.visualizeAllEntities = function() {
@@ -150,43 +106,43 @@ See.prototype.visualizeAllEntities = function() {
 // Visualize a specific entity
 See.prototype.visualizeEntityType = function(anEntityType) {
   var self = this;
-  self.header(self.selectedDataset + " " + anEntityType + " Biclusters");
+  self.header(self.selection.dataset + " " + anEntityType + " Biclusters");
   self.view = 0;
 
   if (anEntityType)
-    self.selectedEntityType = anEntityType;
+    self.selection.entityType = anEntityType;
 
   // Remove the checkbox for the entity we are viewing
   $(".toggleEntityLabel").show();
   $("#toggleEntity" + anEntityType).hide();
 
-  var cache = self.datasets[self.selectedDataset].cache;
+  var cache = self.datasets[self.selection.dataset].cache;
 
    if (!cache.biclusters) {
-    d3.csv(self.rootUrl + "data/" + self.selectedDataset + "_mining.csv", function(b) {
+    d3.csv(self.rootUrl + "data/" + self.selection.dataset + "_mining.csv", function(b) {
       cache.biclusters = b;
-      self.crunchBiclusterNodes(b);
+      self.data.buildNodes(b, self.selection);
 
-      d3.csv(self.rootUrl + "data/" + self.selectedDataset + "_chaining.csv", function(bLinks) {
+      d3.csv(self.rootUrl + "data/" + self.selection.dataset + "_chaining.csv", function(bLinks) {
         cache.links = bLinks;
         self.hideLoading();
         self.draw();
         self.force.on("tick", function(e) {
-          if (self.foci.length != 0) {
+          if (self.data.foci.length != 0) {
             var k = 0.15 * e.alpha;
 
-            self.nodes.forEach(function(o, i) {
-              o.y += (self.foci[o.group].y - o.y) * k;
-              o.x += (self.foci[o.group].x - o.x) * k;
+            self.data.nodes.forEach(function(o, i) {
+              o.y += (self.data.foci[o.group].y - o.y) * k;
+              o.x += (self.data.foci[o.group].x - o.x) * k;
             });
           }
 
           self.vis.selectAll("g.node")
-          .data(self.nodes)
+          .data(self.data.nodes)
           .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
           self.vis.selectAll("line.link")
-          .data(self.links)
+          .data(self.data.links)
           .attr("x1", function(d) { return d.source.x; })
           .attr("y1", function(d) { return d.source.y; })
           .attr("x2", function(d) { return d.target.x; })
@@ -197,18 +153,23 @@ See.prototype.visualizeEntityType = function(anEntityType) {
   }
 
   else {
-    self.crunchBiclusterNodes(cache.biclusters);
+    self.data.buildNodes(cache.biclusters, self.selection);
     self.draw();
+  }
+
+  if (!cache.documents) {
+    d3.csv(self.rootUrl + "data/" + self.selection.dataset + "_documents.csv", function(d) {
+      cache.documents = self.data.buildDocuments(d);
+    });
   }
 }
 
 See.prototype.visualizeEntity = function(anEntity) {
   this.view = 0;
   this.header("Biclusters containing '" + anEntity + "'");
-  this.selectedNode = null;
-  this.selectedConnection = null;
-  this.crunchBiclusterNodesForEntity(this.datasets[this.selectedDataset].cache.biclusters, anEntity);
-  this.crunchFoci();
+  this.selection.node = null;
+  this.selection.connection = null;
+  this.data.nodes(this.datasets[this.selection.dataset].cache.biclusters, this.selection);
   this.draw();
   this.showBackButton();
   this.attachEscapeListener(this);
@@ -216,7 +177,7 @@ See.prototype.visualizeEntity = function(anEntity) {
 
 See.prototype.visualizeBiclusterConnections = function(d) {
   this.view = 1;
-  this.crunchBiclusterConnections(d);
+  this.data.buildConnections(this.datasets[this.selection.dataset].cache.links, this.selection);
   this.header("Biclusters Connected To:");
   this.draw();
   this.showDetailView(d);
@@ -232,42 +193,41 @@ See.prototype.header = function(text) {
   $("#header").text(text);
 }
 
-See.prototype.updateCoordinates = function() {
-  // todo: extend this on the basis of individual cluster sizes, so that a cluster is not hidden
-  if (this.nodes.length <= 100) {
+See.prototype.updateDrawEnvironment = function() {
+  if (this.data.nodes.length <= 100) {
     this.props.charge = -200;
     this.props.r = d3.scale.sqrt().domain([0, 1000]).range([4, 120]);
-    this.coord.x = 200;
-    this.coord.y = 300;
-    this.coord.dx = 200;
-    this.coord.dy = 250;
+    this.data.coord.x = 200;
+    this.data.coord.y = 300;
+    this.data.coord.dx = 200;
+    this.data.coord.dy = 250;
     this.props.gravity = 0.1;
   }
-  else if (this.nodes.length > 100 && this.nodes.length < 500) {
+  else if (this.data.nodes.length > 100 && this.data.nodes.length < 500) {
     this.props.charge = -40;
     this.props.r = d3.scale.sqrt().domain([0, 1000]).range([1.8, 60]);
-    this.coord.x = 200;
-    this.coord.y = 250;
-    this.coord.dx = 200;
-    this.coord.dy = 250;
+    this.data.coord.x = 200;
+    this.data.coord.y = 250;
+    this.data.coord.dx = 200;
+    this.data.coord.dy = 250;
     this.props.gravity = 0.1;
   }
-  else if (this.nodes.length >= 500 && this.nodes.length < 1000) {
+  else if (this.data.nodes.length >= 500 && this.data.nodes.length < 1000) {
     this.props.charge = -30;
     this.props.r = d3.scale.sqrt().domain([0, 1000]).range([1.5, 100]);
-    this.coord.x = 300;
-    this.coord.y = 180;
-    this.coord.dx = 200;
-    this.coord.dy = 250;
+    this.data.coord.x = 300;
+    this.data.coord.y = 180;
+    this.data.coord.dx = 200;
+    this.data.coord.dy = 250;
     this.props.gravity = 0.1;
    }
-   else if (this.nodes.length >= 1000) {
+   else if (this.data.nodes.length >= 1000) {
      this.props.charge = -20;
      this.props.r = d3.scale.sqrt().domain([0, 1000]).range([1.2, 100]);
-     this.coord.x = 200;
-     this.coord.y = 350;
-     this.coord.dx = 250;
-     this.coord.dy = 100;
+     this.data.coord.x = 200;
+     this.data.coord.y = 350;
+     this.data.coord.dx = 250;
+     this.data.coord.dy = 100;
      this.props.gravity = 0.3;
    }
 }
@@ -276,13 +236,13 @@ See.prototype.updateCoordinates = function() {
 See.prototype.draw = function() {
   var self = this;
 
-  self.updateCoordinates();
+  self.updateDrawEnvironment();
   self.drawGroupLabels();
 
   // Start simulation to lay out nodes
   self.force
-  .nodes(self.nodes)
-  .links(self.links)
+  .nodes(self.data.nodes)
+  .links(self.data.links)
   .gravity(self.props.gravity)
   .charge(self.props.charge)
   .linkDistance(self.props.linkDistance)
@@ -298,7 +258,7 @@ See.prototype.draw = function() {
 
   // Select all SVG groups that are classed .node and join with data
   var node = self.vis.selectAll("g.node")
-    .data(self.nodes);
+    .data(self.data.nodes);
 
   // If there are more items in data than existing nodes, append new
   // SVG groups with the default values
@@ -314,7 +274,7 @@ See.prototype.draw = function() {
   //  - Circle radius set from node weight
   //  - Circle fill/stroke (color) set from node ID (e.g. random for now)
   d3.selectAll(".circle")
-    .data(self.nodes)
+    .data(self.data.nodes)
     .attr("r", function(d) {
       return self.props.r(parseFloat(d.dWeight) * 100) || 5; } )
     .style("fill", function(d) {
@@ -322,7 +282,7 @@ See.prototype.draw = function() {
     .style("stroke", function(d) {
       return d3.rgb(self.props.fill(d.group)).darker(1); } )
     .style("stroke-width", function(d) {
-      if (self.selectedNode && d.id == self.selectedNode.id)
+      if (self.selection.node && d.id == self.selection.node.id)
         return 10;
       else
         return 1;
@@ -368,7 +328,7 @@ See.prototype.drawCircle = function(node, self) {
 
 See.prototype.drawEditor = function() {
   var self = this;
-  var entityTypes = self.datasets[self.selectedDataset].entityTypes;
+  var entityTypes = self.datasets[self.selection.dataset].entityTypes;
   var len = entityTypes.length;
 
   var datasetsHTML = function() {
@@ -399,10 +359,10 @@ See.prototype.drawEditor = function() {
     // attach events to checkboxes
     d3.selectAll(".toggleEntity").on("change", function(e) {
       if (this.checked)
-        self.selectedEntities.push(this.value);
+        self.selection.entities.push(this.value);
       else
-        self.selectedEntities.splice(self.selectedEntities.indexOf(this.value), 1);
-      self.crunchBiclusterNodes(self.datasets[self.selectedDataset].cache.biclusters);
+        self.selection.entities.splice(self.selection.entities.indexOf(this.value), 1);
+      self.nodes(self.datasets[self.selection.dataset].cache.biclusters, self.selection);
       self.draw();
     });
   }
@@ -450,11 +410,11 @@ See.prototype.drawEditor = function() {
 See.prototype.drawGroupLabels = function() {
   var self = this;
   $(".groupLabel").remove();
-  if (self.selectedEntityType != "all") {
+  if (self.selection.entityType != "all") {
     // todo: come up with better placement algorithm for group labels
-    var len = self.groups.length;
+    var len = self.data.groups.length;
     for (var i = 0; i < len; i ++)
-      self.drawGroupLabel(self.groups[i], self.foci[i].x, self.foci[i].y);
+      self.drawGroupLabel(self.data.groups[i], self.data.foci[i].x, self.data.foci[i].y);
   }
 }
 
@@ -466,7 +426,7 @@ See.prototype.drawGroupLabel = function(group, x, y) {
   .attr("class", "groupLabel")
   .attr("dx", x)
   .attr("dy", y)
-  .text((group.rowType == self.selectedEntityType) ? group.columnType : group.rowType);
+  .text((group.rowType == self.selection.entityType) ? group.columnType : group.rowType);
 }
 
 // Events
@@ -489,31 +449,31 @@ See.prototype.onNodeDoubleClick = function(d, node) {
 See.prototype.onNodeMouseover = function(d) {
   var self = this;
   if (self.view == 0) {
-    if (!self.selectedNode)
+    if (!self.selection.node)
       self.showDetailView(d);
   }
   else {
-    if (!self.selectedConnection)
+    if (!self.selection.connection)
       self.showConnectionView(d);
     else
-      self.showConnectionView(self.selectedConnection);
+      self.showConnectionView(self.selection.connection);
   }
 }
 
 See.prototype.onNodeMouseout = function(d) {
   var self = this;
-  if (!self.selectedNode)
+  if (!self.selection.node)
     self.hideDetailView();
-  else if (!self.selectedConnection)
-    self.showDetailView(self.selectedNode);
+  else if (!self.selection.connection)
+    self.showDetailView(self.selection.node);
   else
-    self.showConnectionView(self.selectedConnection);
+    self.showConnectionView(self.selection.connection);
 }
 
 // Visualize a bicluster node connections
 See.prototype.openNode = function(d, circle) {
   var self = this;
-  self.selectedNode = d;
+  self.selection.node = d;
   self.visualizeBiclusterConnections(d);
   d3.selectAll(".selected")
   .style("stroke", function(d) {
@@ -525,10 +485,10 @@ See.prototype.openNode = function(d, circle) {
 See.prototype.selectNode = function(d, circle) {
   var self = this;
   if (self.view == 1) {
-    self.selectedConnection = d;
+    self.selection.connection = d;
     self.showConnectionView(d);
   } else {
-    self.selectedNode = d;
+    self.selection.node = d;
     self.showDetailView(d);
   }
   d3.selectAll(".selected").classed("selected", false);
@@ -543,9 +503,9 @@ See.prototype.selectNode = function(d, circle) {
 See.prototype.deselectNode = function(circle) {
   var self = this;
   if (self.view == 0)
-    self.selectedNode = null;
+    self.selection.node = null;
   else
-    self.selectedConnection = null;
+    self.selection.connection = null;
   circle
   .style("stroke", function(d) {
     return d3.rgb(self.props.fill(d.group)).darker(1); } )
@@ -582,348 +542,6 @@ See.prototype.detachEscapeListener = function(self) {
   $(document).unbind('keydown', self.onEscape);
 }
 
-// Data Crunching!
-
-See.prototype.resetData = function() {
-  this.groups = [];
-  this.foci = [];
-  this.nodes = [];
-  this.links = [];
-}
-
-See.prototype.doesRowBelongToGroup = function(row, group) {
-  var self = this;
-  if ((group.rowType == row[self.headers.mining.rowType] && group.columnType == row[self.headers.mining.columnType]) ||
-    (group.rowType == row[self.headers.mining.columnType] && group.columnType == row[self.headers.mining.rowType])) {
-      return true;
-    }
-  return false;
-}
-
-// Find the biclusters for all enabled entity types
-See.prototype.crunchBiclusterNodes = function(data) {
-  var self = this;
-  self.resetData();
-
-  data.forEach(function(row) {
-    if (self.selectedEntityType != "all") {
-      // Row is the selected entity and the column type is checked
-      var case1 = (row[self.headers.mining.rowType] == self.selectedEntityType
-      && self.selectedEntities.indexOf(row[self.headers.mining.columnType]) != -1);
-
-      // Column is the selected entity and the row type is checked
-      var case2 = (row[self.headers.mining.columnType] == self.selectedEntityType
-        && self.selectedEntities.indexOf(row[self.headers.mining.rowType]) != -1);
-
-      // If neither is true, then we don't want to add this row to our
-      // data structures b/c it doesn't match set the filters
-      if (!(case1 || case2)) return;
-    }
-    else {
-      if (self.selectedEntities.indexOf(row[self.headers.mining.columnType]) == -1 ||
-        self.selectedEntities.indexOf(row[self.headers.mining.rowType]) == -1) {
-          return;
-        }
-    }
-
-    var groupId = 0;
-    var wasGroupFound = false;
-    var groupsLength = self.groups.length;
-
-    for (var j = 0; j < groupsLength; j ++) {
-      var group = self.groups[j];
-
-      if (self.doesRowBelongToGroup(row, group)) {
-        wasGroupFound = true;
-        groupId = j;
-        break;
-      }
-    }
-
-    if (!wasGroupFound) {
-      self.groups.push({
-        rowType: row[self.headers.mining.rowType],
-        columnType: row[self.headers.mining.columnType],
-        childrenCount: 0
-      });
-    }
-
-    self.groups[j].childrenCount ++;
-
-    self.nodes.push(new BiclusterNode(row[self.headers.mining.id],
-      row[self.headers.mining.rowType],
-      row[self.headers.mining.columnType],
-      row[self.headers.mining.rows],
-      row[self.headers.mining.columns],
-      row[self.headers.mining.weight],
-      groupId));
-
-    // cache the weight value in self.weights
-    self.weights[row[self.headers.mining.id]] = row[self.headers.mining.weight];
-  });
-
-  self.crunchFoci();
-}
-
-// Find only the biclusters that contain the specified entity
-See.prototype.crunchBiclusterNodesForEntity = function(data, anEntity) {
-  var self = this;
-  self.resetData();
-
-  // for comparison, turn entity into lowercase
-  anEntity = anEntity.toLowerCase();
-
-  data.forEach(function(row) {
-    if (row[self.headers.mining.rows].toLowerCase().indexOf(anEntity) != -1 ||
-    row[self.headers.mining.columns].toLowerCase().indexOf(anEntity) != -1) {
-
-      var groupId = 0;
-      var wasGroupFound = false;
-      var groupsLength = self.groups.length;
-
-      for (var i = 0; i < groupsLength; i ++) {
-        var group = self.groups[i];
-
-        if (self.doesRowBelongToGroup(row, group)) {
-          wasGroupFound = true;
-          groupId = i;
-          break;
-        }
-      }
-
-      if (!wasGroupFound) {
-        self.groups.push({
-          rowType: row[self.headers.mining.rowType],
-          columnType: row[self.headers.mining.columnType],
-          childrenCount: 0
-        });
-      }
-
-      self.groups[i].childrenCount ++;
-
-      self.nodes.push(new BiclusterNode(
-        row[self.headers.mining.id],
-        row[self.headers.mining.rowType],
-        row[self.headers.mining.columnType],
-        row[self.headers.mining.rows],
-        row[self.headers.mining.columns],
-        row[self.headers.mining.weight],
-        groupId));
-
-      // cache the weight value in self.weights
-      self.weights[row[self.headers.mining.id]] = row[self.headers.mining.weight];
-    }
-  });
-  console.log(self.nodes);
-}
-
-// Find all connected biclusters to the selected bicluster (selectedNode)
-See.prototype.crunchBiclusterConnections = function(selectedNode) {
-  var self = this;
-  self.resetData();
-
-  // remove all groups following the group of the selectedNode
-  // this is a hack to keep the same color of selectedNode
-  var groups = self.groups.slice(0, selectedNode.group);
-  var startGroupIndex = selectedNode.group;
-
-  for (var i = 0; i < groups.length; i ++) {
-    groups[i] = {
-      firstType: -1,
-      secondType: -1,
-      thirdType: -1
-    }
-  }
-
-  // push the selected node first
-  self.nodes.push(selectedNode);
-
-  groups[groups.length] = {
-    firstType: selectedNode.rowType,
-    secondType: selectedNode.columnType,
-    thirdType: null
-  };
-
-  var links = self.datasets[self.selectedDataset].cache.links;
-
-  // add all connected biclusters as children to the selected bicluster
-  links.forEach(function (link) {
-    var linkedBiclusterHeader;
-
-    if (link[self.headers.chaining.source.id] == selectedNode.id)
-      linkedBiclusterHeader = self.headers.chaining.destination;
-    else if (link[self.headers.chaining.destination.id] == selectedNode.id)
-      linkedBiclusterHeader = self.headers.chaining.source;
-
-    if (linkedBiclusterHeader) {
-      var groupId = 0;
-      var wasGroupFound = false;
-      var groupsLength = groups.length;
-      var linkRowType = link[linkedBiclusterHeader.rowType];
-      var linkColumnType = link[linkedBiclusterHeader.columnType];
-      var thirdType = null;
-
-      if (selectedNode.rowType == linkRowType) {
-        if (selectedNode.columnType != linkColumnType)
-          thirdType = linkColumnType;
-      } else if (selectedNode.rowType == linkColumnType) {
-        if (selectedNode.columnType != linkRowType)
-          thirdType = linkRowType;
-      } else if (selectedNode.columnType == linkColumnType) {
-        if (selectedNode.rowType != linkRowType)
-          thirdType = linkRowType;
-      } else if (selectedNode.columnType == linkRowType) {
-        if (selectedNode.rowType != linkColumnType)
-          thirdType = linkColumnType;
-      }
-
-      for (var j = startGroupIndex; j < groupsLength; j ++) {
-        var group = groups[j];
-
-        if (thirdType === group.thirdType) {
-          wasGroupFound = true;
-          groupId = j;
-          break;
-        }
-      }
-
-      if (!wasGroupFound) {
-        groups.push({
-          firstType: selectedNode.rowType,
-          secondType: selectedNode.columnType,
-          thirdType: thirdType
-        });
-      }
-
-      var newNode = new BiclusterNode(
-        link[linkedBiclusterHeader.id],
-        link[linkedBiclusterHeader.rowType],
-        link[linkedBiclusterHeader.columnType],
-        link[linkedBiclusterHeader.rows],
-        link[linkedBiclusterHeader.columns],
-        self.weights[link[linkedBiclusterHeader.id]],
-        groupId);
-
-      newNode.cWeight = self.crunchBiclusterConnectionStrength(selectedNode, newNode);
-
-      self.links.push({
-        source: self.nodes[0],
-        target: newNode
-      });
-
-      self.nodes[0].addChild(newNode);
-      self.nodes.push(newNode);
-    }
-  });
-}
-
-// Build focal points for visualization based on self.groups
-See.prototype.crunchFoci = function() {
-  var self = this;
-  var len = self.groups.length;
-
-  for (var i = 0; i < len; i ++) {
-    var x = 0, y = 0;
-    if (self.groups[i].childrenCount < 100) {
-      x -= 100;
-    }
-
-    if (self.selectedEntityType === "all") {
-      if (i < 10) {
-        x += self.coord.x + (80 * i);
-        y += self.coord.y;
-      }
-      else {
-        x += self.coord.x + (80 * (i - 10));
-        y += self.coord.y + self.coord.dy - 100;
-      }
-    }
-    else {
-      if (i < 4) {
-        x += self.coord.x + (self.coord.dx * i);
-        y += self.coord.y;
-      }
-      else {
-        x += self.coord.x + (self.coord.dx * (i - 3));
-        y += self.coord.y + self.coord.dy;
-      }
-    }
-
-    self.foci.push({
-      x: x,
-      y: y
-    });
-  }
-}
-
-// Calculate the Jaccardi's coefficient for a link
-// For now, it is just the no. of common entities in the source and destination bicluster
-See.prototype.crunchBiclusterConnectionStrength = function(srcNode, destNode) {
-  var strength = 0;
-
-  if (srcNode.rowType === destNode.rowType)
-    strength = getStrength(srcNode.rows, destNode.rows);
-  else if (srcNode.rowType === destNode.columnType)
-    strength = getStrength(srcNode.rows, destNode.columns);
-
-  if (srcNode.columnType === destNode.rowType)
-    strength = (strength + getStrength(srcNode.columns, destNode.rows)) / 2;
-  else if (srcNode.columnType === destNode.columnType)
-    strength = (strength + getStrength(srcNode.columns, destNode.columns)) / 2;
-
-  return strength;
-
-  function getStrength(arr_1, arr_2) {
-    var set_1 = arr_1;
-    // create a copy of arr_2, since we are going to reduce its size
-    var set_2 = arr_2.slice(0);
-    var w = 0;
-    var total = set_1.length + set_2.length;
-    var len_1 = set_1.length;
-    for (var i = 0; i < len_1; i ++) {
-      var len_2 = set_2.length;
-      for (var j = 0; j < len_2; j ++) {
-        if (set_1[i] === set_2[j]) {
-          w ++;
-          // We can remove this entity, since there are no duplicate entities
-          set_2.splice(j, 1);
-          break;
-        }
-      }
-    }
-    return w / (total - w);
-  }
-}
-
-// Obsolete: not being used. Instead, an importance metric for each bicluster is included in the data set
-// Set the weight of every bicluster node to be the number of connected biclusters (degree)
-// todo: make this a setting?
-See.prototype.crunchBiclusterWeights = function(data) {
-  var self = this;
-  var mNodes = self.nodes;
-  var mWeights = self.weights;
-
-  data.forEach(function(row) {
-    var link = {};
-    var include = false;
-    var formatted_link = {};
-
-    // todo: extract constants
-    var source_id = row[self.headers.chaining.source.id];
-    var dest_id = row[self.headers.chaining.destination.id];
-
-    var len = self.nodes.length;
-    for (var i = 0; i < len; i ++) {
-      if (mWeights[mNodes[i].id] == undefined)
-        mWeights[mNodes[i].id] = 0;
-      if (mNodes[i].id == source_id || mNodes[i].id == dest_id) {
-        mNodes[i].dWeight ++;
-        mWeights[mNodes[i].id] ++;
-      }
-    }
-  });
-}
-
 // Initialize and create the DIV which will contain selected bicluster(s) content
 See.prototype.initDetailView = function() {
   return d3.select("#tooltipContainer")
@@ -957,7 +575,7 @@ See.prototype.showConnectionView = function(d) {
   var self = this;
 
   d3.select("#detailView")
-  .html(self.biclusterConnectionHTML(self.selectedNode, d))
+  .html(self.biclusterConnectionHTML(self.selection.node, d))
   .style("display", "block");
 }
 
@@ -1056,11 +674,11 @@ See.prototype.biclusterConnectionHTML = function(b1, b2) {
     types.push(type);
 
   // stick the selected entity to the first column
-  if (types[1] == self.selectedNode.rowType) {
+  if (types[1] == self.selection.node.rowType) {
     temp = types[1];
     types[1] = types[0];
     types[0] = temp;
-  } else if (types[2] && types[2] == self.selectedEntityType) {
+  } else if (types[2] && types[2] == self.selection.entityType) {
     temp = types[2];
     types[2] = types[0];
     types[0] = temp;
@@ -1098,8 +716,8 @@ See.prototype.biclusterConnectionHTML = function(b1, b2) {
 See.prototype.biclusterHTML = function(d) {
   var firstCol, secondCol;
   var html;
-
-  if (d.columnType == self.selectedEntityType) {
+  var self = this;
+  if (d.columnType == self.selection.entityType) {
     html = "<table><tr><th>" + d.columnType + "</th><th>" + d.rowType + "</th></tr>";
     firstCol = "columns";
     secondCol = "rows";
