@@ -7,11 +7,6 @@
   font-size: 12px;
 }
 
-.groupLabel {
-  font-size: 12px;
-  fill: #555;
-}
-
 circle.circle {
   cursor: pointer;
   stroke-width: 2px;
@@ -25,7 +20,7 @@ line.link {
   stroke: #ccc;
 }
 
-#tooltipContainer {
+#left {
   position: absolute;
   z-index: 10;
   left: 20px;
@@ -33,21 +28,27 @@ line.link {
   margin-right: 50px;
 }
 
-.tooltip {
+.b-table {
   background: rgba(250, 250, 250, 0.9);
   border: 1px solid #eee;
   border-radius: 5px;
-  padding: 10px;
+  padding: 5px;
   color: #555;
   font-size: 10px;
+  max-height: 300px;
+  overflow-y: scroll;
 }
 
 td {
   margin: 0;
   padding: 0;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
   border-right: 1px solid #ccc;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100px;
 }
 
 td:not(.empty):hover {
@@ -75,7 +76,32 @@ td:last-child {
 }
 
 th {
-  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+
+#legend {
+  top: 370px;
+  position: absolute;
+  width: 200px;
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
+#legend .pair {
+  display: block;
+}
+
+#legend .value {
+  color: #ccc;
+  font-size: 11px;
+  display: inline-block;
+}
+
+#legend .key {
+  height: 5px;
+  width: 9px;
+  display: inline-block;
+  margin-right: 10px;
 }
 
 #header {
@@ -86,7 +112,7 @@ th {
   width: 90%;
 }
 
-#backButton {
+#back-btn {
   left: 20px;
   top: 55px;
   position: absolute;
@@ -94,7 +120,7 @@ th {
 }
 
 .title {
-  color: #ccc;
+  color: #555;
   font-size: 15px;
   text-transform: capitalize;
 }

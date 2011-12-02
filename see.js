@@ -3,6 +3,28 @@ var See = function() {
   this.force,
   this.vis,
   this.view = 0,
+  this.colors = [
+    "#1f77b4",
+    "#aec7e8",
+    "#ff7f0e",
+    "#ffbb78",
+    "#2ca02c",
+    "#98df8a",
+    "#d62728",
+    "#ff9896",
+    "#9467bd",
+    "#c5b0d5",
+    "#8c564b",
+    "#c49c94",
+    "#e377c2",
+    "#f7b6d2",
+    "#7f7f7f",
+    "#c7c7c7",
+    "#bcbd22",
+    "#dbdb8d",
+    "#17becf",
+    "#9edae5"
+  ],
 
   this.selection = {
     entityName: null,
@@ -84,6 +106,7 @@ See.prototype.birth = function() {
 See.prototype.reset = function() {
   this.selection.node = null;
   this.selection.connection = null;
+  this.selection.entityName = null;
   this.hideDetailView();
   this.hideBackButton();
   this.visualizeEntityType(this.selection.entityType);
@@ -159,8 +182,13 @@ See.prototype.visualizeEntityType = function(anEntityType) {
 
   if (!cache.documents) {
     d3.csv(self.rootUrl + "data/" + self.selection.dataset + "_documents.csv", function(d) {
-      cache.documents = self.data.buildDocuments(d);
+      cache.documents = d;
+      self.data.buildDocuments(d, self.selection);
+      self.drawDocs();
     });
+  } else {
+    self.data.buildDocuments(cache.documents);
+    self.drawDocs();
   }
 }
 
@@ -169,7 +197,8 @@ See.prototype.visualizeEntity = function(anEntity) {
   this.header("Biclusters containing '" + anEntity + "'");
   this.selection.node = null;
   this.selection.connection = null;
-  this.data.nodes(this.datasets[this.selection.dataset].cache.biclusters, this.selection);
+  this.selection.entityName = anEntity;
+  this.data.buildNodes(this.datasets[this.selection.dataset].cache.biclusters, this.selection);
   this.draw();
   this.showBackButton();
   this.attachEscapeListener(this);
@@ -237,7 +266,7 @@ See.prototype.draw = function() {
   var self = this;
 
   self.updateDrawEnvironment();
-  self.drawGroupLabels();
+  self.drawLegend();
 
   // Start simulation to lay out nodes
   self.force
@@ -362,18 +391,18 @@ See.prototype.drawEditor = function() {
         self.selection.entities.push(this.value);
       else
         self.selection.entities.splice(self.selection.entities.indexOf(this.value), 1);
-      self.nodes(self.datasets[self.selection.dataset].cache.biclusters, self.selection);
+      self.data.buildNodes(self.datasets[self.selection.dataset].cache.biclusters, self.selection);
       self.draw();
     });
   }
 
   var editor = d3.select("#editor");
   var isEditorInitialized = editor.classed("initialized");
-  var entitySelector = d3.select("#entitySelector");
+  var entitySelector = d3.select("#entity-selector");
 
   entitySelector.html(entitySelectorHTML());
 
-  d3.select("#entityFilters").html(entityFiltersHTML());
+  d3.select("#filters").html(entityFiltersHTML());
   attachEntityFilterListeners();
 
   if (!isEditorInitialized) {
@@ -407,26 +436,26 @@ See.prototype.drawEditor = function() {
   }
 }
 
-See.prototype.drawGroupLabels = function() {
-  var self = this;
-  $(".groupLabel").remove();
-  if (self.selection.entityType != "all") {
-    // todo: come up with better placement algorithm for group labels
-    var len = self.data.groups.length;
-    for (var i = 0; i < len; i ++)
-      self.drawGroupLabel(self.data.groups[i], self.data.foci[i].x, self.data.foci[i].y);
-  }
+See.prototype.drawDocs = function() {
+
 }
 
-See.prototype.drawGroupLabel = function(group, x, y) {
+See.prototype.drawLegend = function() {
   var self = this;
+  $("#legend").html("");
+  var len = self.data.groups.length;
+  for (var i = 0; i < len; i ++)
+    self.drawLabel(i, self.data.groups[i]);
+}
 
-  d3.select("#drawing")
-  .append("svg:text")
-  .attr("class", "groupLabel")
-  .attr("dx", x)
-  .attr("dy", y)
-  .text((group.rowType == self.selection.entityType) ? group.columnType : group.rowType);
+See.prototype.drawLabel = function(keyIndex, group) {
+  var self = this;
+  var text = group.rowType ? group.rowType + " + " + group.columnType : (group.firstType + " + " + group.secondType + (group.thirdType ? " + " + group.thirdType : ""));
+  var color = keyIndex <=20 ? self.colors[keyIndex] : "grey";
+  var html = "<div class='pair'>";
+  html += "<div class='key' style='background-color: " + color + "'></div>";
+  html += "<div class='value'>" + text + "</div></div>";
+  $("#legend").append(html);
 }
 
 // Events
@@ -520,7 +549,7 @@ See.prototype.onEscape = function(e) {
 
 See.prototype.attachListeners = function() {
   var self = this;
-  $("#backButton").click(function(e) {
+  $("#back-btn").click(function(e) {
     self.reset();
   });
 
@@ -544,16 +573,16 @@ See.prototype.detachEscapeListener = function(self) {
 
 // Initialize and create the DIV which will contain selected bicluster(s) content
 See.prototype.initDetailView = function() {
-  return d3.select("#tooltipContainer")
+  return d3.select("#b-table-container")
   .append("div")
-  .attr("id", "detailView")
-  .attr("class", "tooltip");
+  .attr("id", "detail-view")
+  .attr("class", "b-table");
 }
 
 // Shows the contents of a bicluster in a tabular layout
 See.prototype.showDetailView = function(d) {
   var self = this;
-  var detailView = d3.select("#detailView");
+  var detailView = d3.select("#detail-view");
 
   // selections in d3 are of the form [[node]]
   if (!detailView[0][0])
@@ -566,7 +595,7 @@ See.prototype.showDetailView = function(d) {
 
 // Hides the contents of bicluster(s)
 See.prototype.hideDetailView = function() {
-  d3.select("#detailView")
+  d3.select("#detail-view")
   .style("display", "none");
 }
 
@@ -574,17 +603,17 @@ See.prototype.hideDetailView = function() {
 See.prototype.showConnectionView = function(d) {
   var self = this;
 
-  d3.select("#detailView")
+  d3.select("#detail-view")
   .html(self.biclusterConnectionHTML(self.selection.node, d))
   .style("display", "block");
 }
 
 See.prototype.showBackButton = function() {
-  $("#backButton").show();
+  $("#back-btn").show();
 }
 
 See.prototype.hideBackButton = function() {
-  $("#backButton").hide();
+  $("#back-btn").hide();
 }
 
 // Returns the HTML table for the union of two biclusters b1 and b2.

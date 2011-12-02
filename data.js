@@ -6,6 +6,7 @@ See.prototype.data = {
   links: [],
   // List of 'weights' for each bicluster, indexable using the bicluster id
   weights: [],
+  documents: [],
 
   coord: {
     x: 200,
@@ -64,7 +65,8 @@ See.prototype.data = {
     return false;
   },
 
-  buildDocuments: function(data) {
+  buildDocuments: function(data, selection) {
+    //
   },
 
   buildNodes: function(data, selection) {
@@ -99,8 +101,8 @@ See.prototype.data = {
       }
 
       if (selection.entityName &&
-        row[self.headers.mining.rows].toLowerCase().indexOf(anEntity) == -1 &&
-        row[self.headers.mining.columns].toLowerCase().indexOf(anEntity) == -1) {
+        row[self.headers.mining.rows].toLowerCase().indexOf(selection.entityName) == -1 &&
+        row[self.headers.mining.columns].toLowerCase().indexOf(selection.entityName) == -1) {
           return;
       }
 
