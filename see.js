@@ -969,7 +969,8 @@ See.prototype.hideBackButton = function() {
   $("#backButton").hide();
 }
 
-// Returns the HTML table for the union of two biclusters b1 and b2. The common entities are highlighted
+// Returns the HTML table for the union of two biclusters b1 and b2.
+// The new entities added from b2 are highlighted
 // todo: optimize this
 // todo: cleanup this method
 See.prototype.biclusterConnectionHTML = function(b1, b2) {
@@ -977,53 +978,43 @@ See.prototype.biclusterConnectionHTML = function(b1, b2) {
   var entities = {};
 
   // Given two sets of entities, does a union of both sets
-  // For common entities, sets the associated "common" flag to true
+  // For common entities, sets the "common" flag to true
+  // For entities in entitySet2, not present in entitySet1, sets the "isNew" flag to true
   function buildEntities(type, entitySet1, entitySet2) {
     entities[type] = [];
-    var length;
 
-    // Set the length to the smaller of the two entity sets, since we'll be iterating through it to highlight the common entities
-    // If the second entity set is smaller, make it the first entity set
-    if (entitySet1.length > entitySet2.length) {
-      tempSet = entitySet1;
-      entitySet1 = entitySet2;
-      entitySet2 = tempSet;
-    }
-
-    length = entitySet1.length;
-
+    var set1_length = entitySet1.length;
+    var set2_length = entitySet2.length;
     var commonEntityIndicesInSet2 = [];
 
-    for (var i = 0; i < length; i ++) {
+    for (var i = 0; i < set1_length; i ++) {
       if (entitySet2[i]) {
         var isCommon = false;
-        var entitySet2_length = entitySet2.length;
 
         // iterate through the second entity set to find a matching entity if it exists
-        for (var j = 0; j < entitySet2_length; j ++ ) {
+        for (var j = 0; j < set2_length; j ++ ) {
           if (entitySet1[i].trim() === entitySet2[j].trim()) {
             isCommon = true;
             commonEntityIndicesInSet2.push(j);
             break;
           }
         }
-
-        entities[type].push({
-          value: entitySet1[i],
-          common: isCommon
-        });
       }
+
+      entities[type].push({
+        value: entitySet1[i],
+        common: isCommon
+      });
     }
 
     // Add any remaining entities in the second entity set
-    length = entitySet2.length;
-
-    for (var i = 0; i < length ; i ++) {
+    for (var i = 0; i < set2_length ; i ++) {
       // Check that the entity isn't already added
       if (commonEntityIndicesInSet2.indexOf(i) == -1)
       entities[type].push({
         value: entitySet2[i],
-        common: false
+        common: false,
+        isNew: true
       });
     }
   }
@@ -1060,11 +1051,12 @@ See.prototype.biclusterConnectionHTML = function(b1, b2) {
 
   var html = "<table><tr>";
   var types = [];
+
   for (type in entities)
     types.push(type);
 
   // stick the selected entity to the first column
-  if (types[1] == self.selectedEntityType) {
+  if (types[1] == self.selectedNode.rowType) {
     temp = types[1];
     types[1] = types[0];
     types[0] = temp;
@@ -1090,7 +1082,7 @@ See.prototype.biclusterConnectionHTML = function(b1, b2) {
       var type = types[j];
       if (entities[type][i])
         html += self.biclusterEntityHTML(entities[type][i].value ? entities[type][i].value : entities[type][i],
-        entities[type][i].common);
+        entities[type][i].common, entities[type][i].isNew);
       else
         html += self.biclusterEntityHTML(null);
     }
@@ -1132,13 +1124,15 @@ See.prototype.biclusterHTML = function(d) {
 }
 
 // Returns a <td> row for an entity
-See.prototype.biclusterEntityHTML = function(value, highlighted) {
+See.prototype.biclusterEntityHTML = function(value, isCommon, isNew) {
   if (value) {
     var html = "<td class='entityName"
-    if (highlighted)
+    if (isNew)
       html += " highlighted"
-     html += "' title='Click to view biclusters containing " + value +"'>" + value + "</td>";
-     return html;
+    else if (isCommon)
+      html += " common"
+    html += "' title='Click to view biclusters containing " + value +"'>" + value + "</td>";
+    return html;
   }
   else
     return "<td class='empty'></td>";

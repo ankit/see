@@ -58,7 +58,12 @@ td:not(.empty):hover {
 
 td.highlighted {
   color: #fff;
-  background-color: #333;
+  background-color: green;
+}
+
+td.common {
+  color: #fff;
+  background-color: skyblue;
 }
 
 td:nth-child(1) {
