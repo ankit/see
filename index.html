@@ -17,16 +17,23 @@
   <body>
     <div id="viz">
       <div id="header" class="title"></div>
+      <button id="backButton">
+        Go Back
+      </button>
       <div id="editor">
-        <label>Data: </label>
+        <!-- <label>Dataset: </label>
         <select id="dataSelector">
         </select>
-        <br><br>
-        <label>Entity: </label>
+        <br><br> -->
+        <label>Entity Type: </label>
         <select id="entitySelector">
         </select>
         <br><br>
-        <label>Connected Entities: </label>
+        <label>Search Entity:</label>
+        <input type="search" id="search" />
+        <button id="search-btn">Go</button>
+        <br><br>
+        <label>Visible Entity Types: </label>
         <br><br>
         <div id="entityFilters">
         </div>

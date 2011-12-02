@@ -121,13 +121,15 @@ See.prototype.birth = function() {
   .attr("width", this.size.w)
   .attr("height", this.size.h);
 
-  this.visualizeDataset("crescent");
+  this.attachListeners();
+  this.visualizeDataset("atlanticstorm");
 }
 
 See.prototype.reset = function() {
   this.selectedNode = null;
   this.selectedConnection = null;
   this.hideDetailView();
+  this.hideBackButton();
   this.visualizeEntityType(this.selectedEntityType);
   this.detachEscapeListener(this);
 }
@@ -138,7 +140,7 @@ See.prototype.visualizeDataset = function(dataset) {
   this.selectedEntities = this.datasets[this.selectedDataset].entityTypes;
   this.drawEditor();
   this.visualizeAllEntities();
-  this.updateHeader(this.selectedDataset + " " + this.selectedEntityType + " Biclusters");
+  this.header(this.selectedDataset + " " + this.selectedEntityType + " Biclusters");
 }
 
 See.prototype.visualizeAllEntities = function() {
@@ -148,7 +150,7 @@ See.prototype.visualizeAllEntities = function() {
 // Visualize a specific entity
 See.prototype.visualizeEntityType = function(anEntityType) {
   var self = this;
-  self.updateHeader(self.selectedDataset + " " + anEntityType + " Biclusters");
+  self.header(self.selectedDataset + " " + anEntityType + " Biclusters");
   self.view = 0;
 
   if (anEntityType)
@@ -201,21 +203,32 @@ See.prototype.visualizeEntityType = function(anEntityType) {
 }
 
 See.prototype.visualizeEntity = function(anEntity) {
-
+  this.view = 0;
+  this.header("Biclusters containing '" + anEntity + "'");
+  this.selectedNode = null;
+  this.selectedConnection = null;
+  this.crunchBiclusterNodesForEntity(this.datasets[this.selectedDataset].cache.biclusters, anEntity);
+  this.crunchFoci();
+  this.draw();
+  this.showBackButton();
+  this.attachEscapeListener(this);
 }
 
 See.prototype.visualizeBiclusterConnections = function(d) {
   this.view = 1;
   this.crunchBiclusterConnections(d);
-  this.updateHeader("Biclusters Connected To:");
+  this.header("Biclusters Connected To:");
   this.draw();
+  this.showDetailView(d);
+  this.showBackButton();
+  this.attachEscapeListener(this);
 }
 
 See.prototype.hideLoading = function() {
   $("#loading").fadeOut(this.props.fadeDuration);
 }
 
-See.prototype.updateHeader = function(text) {
+See.prototype.header = function(text) {
   $("#header").text(text);
 }
 
@@ -264,7 +277,6 @@ See.prototype.draw = function() {
   var self = this;
 
   self.updateCoordinates();
-
   self.drawGroupLabels();
 
   // Start simulation to lay out nodes
@@ -341,7 +353,10 @@ See.prototype.drawCircle = function(node, self) {
     return 1;
   })
   .on("click", function(e) {
-    self.onNodeSelection(e, this);
+    self.onNodeClick(e, this);
+  })
+  .on("dblclick", function(e) {
+    self.onNodeDoubleClick(e, this);
   })
   .on("mouseover", function(e) {
     self.onNodeMouseover(e);
@@ -418,12 +433,17 @@ See.prototype.drawEditor = function() {
       self.visualizeEntityType(this.value);
     });
 
-    // add the data sets. they only need to intialized once
-    var dataSelector = d3.select("#dataSelector");
-    dataSelector.html(datasetsHTML());
-    dataSelector.on("change", function(e) {
-      self.visualizeDataset(this.value);
+    // attach event to entity search box
+    $("#search").bind("change", function(e) {
+      self.visualizeEntity(this.value);
     });
+
+    // // add the data sets. they only need to intialized once
+    // var dataSelector = d3.select("#dataSelector");
+    // dataSelector.html(datasetsHTML());
+    // dataSelector.on("change", function(e) {
+    //   self.visualizeDataset(this.value);
+    // });
   }
 }
 
@@ -450,7 +470,7 @@ See.prototype.drawGroupLabel = function(group, x, y) {
 }
 
 // Events
-See.prototype.onNodeSelection = function(d, node) {
+See.prototype.onNodeClick = function(d, node) {
   var self = this;
   var circle = d3.select(node);
 
@@ -460,28 +480,63 @@ See.prototype.onNodeSelection = function(d, node) {
     self.selectNode(d, circle);
 }
 
-// Select a bicluster node. Brings focus to the bicluster and its connections
-See.prototype.selectNode = function(d, circle) {
+See.prototype.onNodeDoubleClick = function(d, node) {
+  var self = this;
+  var circle = d3.select(node);
+  self.openNode(d, circle);
+}
+
+See.prototype.onNodeMouseover = function(d) {
   var self = this;
   if (self.view == 0) {
-    self.selectedNode = d;
-    self.visualizeBiclusterConnections(d);
-    self.showDetailView(d);
-    self.attachEscapeListener(self);
-    d3.selectAll(".selected")
-    .style("stroke", function(d) {
-      return d3.rgb(self.props.fill(d.group)).darker(1); } )
-    .classed("selected", false);
+    if (!self.selectedNode)
+      self.showDetailView(d);
   }
   else {
+    if (!self.selectedConnection)
+      self.showConnectionView(d);
+    else
+      self.showConnectionView(self.selectedConnection);
+  }
+}
+
+See.prototype.onNodeMouseout = function(d) {
+  var self = this;
+  if (!self.selectedNode)
+    self.hideDetailView();
+  else if (!self.selectedConnection)
+    self.showDetailView(self.selectedNode);
+  else
+    self.showConnectionView(self.selectedConnection);
+}
+
+// Visualize a bicluster node connections
+See.prototype.openNode = function(d, circle) {
+  var self = this;
+  self.selectedNode = d;
+  self.visualizeBiclusterConnections(d);
+  d3.selectAll(".selected")
+  .style("stroke", function(d) {
+    return d3.rgb(self.props.fill(d.group)).darker(1); } )
+  .classed("selected", false);
+}
+
+// Select a bicluster node
+See.prototype.selectNode = function(d, circle) {
+  var self = this;
+  if (self.view == 1) {
     self.selectedConnection = d;
     self.showConnectionView(d);
-    d3.selectAll(".selected").classed("selected", false);
-    circle
-    .style("stroke", function(d) {
-      return d3.rgb(self.props.fill(d.group)).darker(3); } )
-    .classed("selected", true);
+  } else {
+    self.selectedNode = d;
+    self.showDetailView(d);
   }
+  d3.selectAll(".selected").classed("selected", false);
+  circle
+  .style("stroke", function(d) {
+    return d3.rgb(self.props.fill(d.group)).darker(3);
+  })
+  .classed("selected", true);
 }
 
 // Takes focus away from a selected bicluster node. Brings back the overall view
@@ -497,30 +552,26 @@ See.prototype.deselectNode = function(circle) {
   .classed("selected", false);
 }
 
-See.prototype.onNodeMouseover = function(d) {
-  var self = this;
-  if (!self.selectedNode)
-    self.showDetailView(d);
-  else if (!self.selectedConnection)
-    self.showConnectionView(d);
-  else
-    self.showConnectionView(self.selectedConnection);
-}
-
-See.prototype.onNodeMouseout = function(d) {
-  var self = this;
-  if (!self.selectedNode)
-    self.hideDetailView();
-  else if (!self.selectedConnection)
-    self.showDetailView(self.selectedNode);
-  else
-    self.showConnectionView(self.selectedConnection);
-}
-
 See.prototype.onEscape = function(e) {
   if (e.keyCode != 27)
     return;
   e.data.self.reset();
+}
+
+See.prototype.attachListeners = function() {
+  var self = this;
+  $("#backButton").click(function(e) {
+    self.reset();
+  });
+
+  $("#search-btn").click(function(e) {
+    self.visualizeEntity($("#search").val());
+  });
+
+  // attach a live listener for entity names
+  $(".entityName").live("click", function(e) {
+    self.visualizeEntity(this.innerText);
+  });
 }
 
 See.prototype.attachEscapeListener = function(self) {
@@ -531,17 +582,30 @@ See.prototype.detachEscapeListener = function(self) {
   $(document).unbind('keydown', self.onEscape);
 }
 
-// Data Crunching
+// Data Crunching!
+
+See.prototype.resetData = function() {
+  this.groups = [];
+  this.foci = [];
+  this.nodes = [];
+  this.links = [];
+}
+
+See.prototype.doesRowBelongToGroup = function(row, group) {
+  var self = this;
+  if ((group.rowType == row[self.headers.mining.rowType] && group.columnType == row[self.headers.mining.columnType]) ||
+    (group.rowType == row[self.headers.mining.columnType] && group.columnType == row[self.headers.mining.rowType])) {
+      return true;
+    }
+  return false;
+}
+
+// Find the biclusters for all enabled entity types
 See.prototype.crunchBiclusterNodes = function(data) {
   var self = this;
-  self.groups = [];
-  self.foci = [];
-  self.nodes = [];
-  self.links = [];
+  self.resetData();
 
-  var d_len = data.length;
-
-  data.forEach(function (row) {
+  data.forEach(function(row) {
     if (self.selectedEntityType != "all") {
       // Row is the selected entity and the column type is checked
       var case1 = (row[self.headers.mining.rowType] == self.selectedEntityType
@@ -569,14 +633,7 @@ See.prototype.crunchBiclusterNodes = function(data) {
     for (var j = 0; j < groupsLength; j ++) {
       var group = self.groups[j];
 
-      if ((self.selectedEntityType !== "all" && group.rowType == row[self.headers.mining.rowType]
-        && group.columnType == row[self.headers.mining.columnType]) ||
-        (self.selectedEntityType === "all" &&
-        ((group.rowType == row[self.headers.mining.rowType]
-        && group.columnType == row[self.headers.mining.columnType]) ||
-        (group.rowType == row[self.headers.mining.columnType]
-        && group.columnType == row[self.headers.mining.rowType])
-        ))) {
+      if (self.doesRowBelongToGroup(row, group)) {
         wasGroupFound = true;
         groupId = j;
         break;
@@ -608,59 +665,68 @@ See.prototype.crunchBiclusterNodes = function(data) {
   self.crunchFoci();
 }
 
-See.prototype.crunchFoci = function() {
+// Find only the biclusters that contain the specified entity
+See.prototype.crunchBiclusterNodesForEntity = function(data, anEntity) {
   var self = this;
-  var len = self.groups.length;
+  self.resetData();
 
-  for (var i = 0; i < len; i ++) {
-    var x = 0, y = 0;
-    if (self.groups[i].childrenCount < 100) {
-      x -= 100;
-    }
+  // for comparison, turn entity into lowercase
+  anEntity = anEntity.toLowerCase();
 
-    if (self.selectedEntityType === "all") {
-      if (i < 10) {
-        x += self.coord.x + (80 * i);
-        y += self.coord.y;
-      }
-      else {
-        x += self.coord.x + (80 * (i - 10));
-        y += self.coord.y + self.coord.dy - 100;
-      }
-    }
-    else {
-      if (i < 4) {
-        x += self.coord.x + (self.coord.dx * i);
-        y += self.coord.y;
-      }
-      else {
-        x += self.coord.x + (self.coord.dx * (i - 3));
-        y += self.coord.y + self.coord.dy;
-      }
-    }
+  data.forEach(function(row) {
+    if (row[self.headers.mining.rows].toLowerCase().indexOf(anEntity) != -1 ||
+    row[self.headers.mining.columns].toLowerCase().indexOf(anEntity) != -1) {
 
-    self.foci.push({
-      x: x,
-      y: y
-    });
-  }
+      var groupId = 0;
+      var wasGroupFound = false;
+      var groupsLength = self.groups.length;
+
+      for (var i = 0; i < groupsLength; i ++) {
+        var group = self.groups[i];
+
+        if (self.doesRowBelongToGroup(row, group)) {
+          wasGroupFound = true;
+          groupId = i;
+          break;
+        }
+      }
+
+      if (!wasGroupFound) {
+        self.groups.push({
+          rowType: row[self.headers.mining.rowType],
+          columnType: row[self.headers.mining.columnType],
+          childrenCount: 0
+        });
+      }
+
+      self.groups[i].childrenCount ++;
+
+      self.nodes.push(new BiclusterNode(
+        row[self.headers.mining.id],
+        row[self.headers.mining.rowType],
+        row[self.headers.mining.columnType],
+        row[self.headers.mining.rows],
+        row[self.headers.mining.columns],
+        row[self.headers.mining.weight],
+        groupId));
+
+      // cache the weight value in self.weights
+      self.weights[row[self.headers.mining.id]] = row[self.headers.mining.weight];
+    }
+  });
+  console.log(self.nodes);
 }
 
-// Sets up data for simulation. Discovers connections to selected bicluster (selectedNode)
+// Find all connected biclusters to the selected bicluster (selectedNode)
 See.prototype.crunchBiclusterConnections = function(selectedNode) {
   var self = this;
-
-  // reset all data
-  self.foci = [];
-  self.nodes = [];
-  self.links = [];
+  self.resetData();
 
   // remove all groups following the group of the selectedNode
   // this is a hack to keep the same color of selectedNode
   var groups = self.groups.slice(0, selectedNode.group);
   var startGroupIndex = selectedNode.group;
-  // reset groups data
-  self.groups = [];
+
   for (var i = 0; i < groups.length; i ++) {
     groups[i] = {
       firstType: -1,
@@ -751,6 +817,84 @@ See.prototype.crunchBiclusterConnections = function(selectedNode) {
   });
 }
 
+// Build focal points for visualization based on self.groups
+See.prototype.crunchFoci = function() {
+  var self = this;
+  var len = self.groups.length;
+
+  for (var i = 0; i < len; i ++) {
+    var x = 0, y = 0;
+    if (self.groups[i].childrenCount < 100) {
+      x -= 100;
+    }
+
+    if (self.selectedEntityType === "all") {
+      if (i < 10) {
+        x += self.coord.x + (80 * i);
+        y += self.coord.y;
+      }
+      else {
+        x += self.coord.x + (80 * (i - 10));
+        y += self.coord.y + self.coord.dy - 100;
+      }
+    }
+    else {
+      if (i < 4) {
+        x += self.coord.x + (self.coord.dx * i);
+        y += self.coord.y;
+      }
+      else {
+        x += self.coord.x + (self.coord.dx * (i - 3));
+        y += self.coord.y + self.coord.dy;
+      }
+    }
+
+    self.foci.push({
+      x: x,
+      y: y
+    });
+  }
+}
+
+// Calculate the Jaccardi's coefficient for a link
+// For now, it is just the no. of common entities in the source and destination bicluster
+See.prototype.crunchBiclusterConnectionStrength = function(srcNode, destNode) {
+  var strength = 0;
+
+  if (srcNode.rowType === destNode.rowType)
+    strength = getStrength(srcNode.rows, destNode.rows);
+  else if (srcNode.rowType === destNode.columnType)
+    strength = getStrength(srcNode.rows, destNode.columns);
+
+  if (srcNode.columnType === destNode.rowType)
+    strength = (strength + getStrength(srcNode.columns, destNode.rows)) / 2;
+  else if (srcNode.columnType === destNode.columnType)
+    strength = (strength + getStrength(srcNode.columns, destNode.columns)) / 2;
+
+  return strength;
+
+  function getStrength(arr_1, arr_2) {
+    var set_1 = arr_1;
+    // create a copy of arr_2, since we are going to reduce its size
+    var set_2 = arr_2.slice(0);
+    var w = 0;
+    var total = set_1.length + set_2.length;
+    var len_1 = set_1.length;
+    for (var i = 0; i < len_1; i ++) {
+      var len_2 = set_2.length;
+      for (var j = 0; j < len_2; j ++) {
+        if (set_1[i] === set_2[j]) {
+          w ++;
+          // We can remove this entity, since there are no duplicate entities
+          set_2.splice(j, 1);
+          break;
+        }
+      }
+    }
+    return w / (total - w);
+  }
+}
+
 // Obsolete: not being used. Instead, an importance metric for each bicluster is included in the data set
 // Set the weight of every bicluster node to be the number of connected biclusters (degree)
 // todo: make this a setting?
@@ -778,46 +922,6 @@ See.prototype.crunchBiclusterWeights = function(data) {
       }
     }
   });
-}
-
-// Calculate the Jaccardi's coefficient for a link
-// For now, it is just the no. of common entities in the source and destination bicluster
-See.prototype.crunchBiclusterConnectionStrength = function(srcNode, destNode) {
-  var strength = 0;
-
-  if (srcNode.rowType === destNode.rowType)
-    strength = getStrength(srcNode.rows, destNode.rows);
-  else if (srcNode.rowType === destNode.columnType)
-    strength = getStrength(srcNode.rows, destNode.columns);
-
-  if (srcNode.columnType === destNode.rowType)
-    strength = (strength + getStrength(srcNode.columns, destNode.rows)) / 2;
-  else if (srcNode.columnType === destNode.columnType)
-    strength = (strength + getStrength(srcNode.columns, destNode.columns)) / 2;
-
-  console.log(strength);
-  return strength;
-
-  function getStrength(arr_1, arr_2) {
-    var set_1 = arr_1;
-    // create a copy of arr_2, since we are going to reduce its size
-    var set_2 = arr_2.slice(0);
-    var w = 0;
-    var total = set_1.length + set_2.length;
-    var len_1 = set_1.length;
-    for (var i = 0; i < len_1; i ++) {
-      var len_2 = set_2.length;
-      for (var j = 0; j < len_2; j ++) {
-        if (set_1[i] === set_2[j]) {
-          w ++;
-          // We can remove this entity, since there are no duplicate entities
-          set_2.splice(j, 1);
-          break;
-        }
-      }
-    }
-    return w / (total - w);
-  }
 }
 
 // Initialize and create the DIV which will contain selected bicluster(s) content
@@ -855,6 +959,14 @@ See.prototype.showConnectionView = function(d) {
   d3.select("#detailView")
   .html(self.biclusterConnectionHTML(self.selectedNode, d))
   .style("display", "block");
+}
+
+See.prototype.showBackButton = function() {
+  $("#backButton").show();
+}
+
+See.prototype.hideBackButton = function() {
+  $("#backButton").hide();
 }
 
 // Returns the HTML table for the union of two biclusters b1 and b2. The common entities are highlighted
@@ -1022,10 +1134,10 @@ See.prototype.biclusterHTML = function(d) {
 // Returns a <td> row for an entity
 See.prototype.biclusterEntityHTML = function(value, highlighted) {
   if (value) {
-    var html = "<td "
+    var html = "<td class='entityName"
     if (highlighted)
-      html += "class='highlighted' "
-     html += "title='Click to view biclusters containing " + value +"'>" + value + "</td>";
+      html += " highlighted"
+     html += "' title='Click to view biclusters containing " + value +"'>" + value + "</td>";
      return html;
   }
   else
