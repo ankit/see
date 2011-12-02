@@ -74,6 +74,18 @@ See.prototype.data = {
         if (data[i].id == selection.node.document)
           this.documents.push(data[i]);
       }
+    } else if (selection.entityName) {
+      this.documents = [];
+      var len = this.nodes.length;
+      var d_len = data.length;
+      for (var i = 0; i < len; i++) {
+        for (var j = 0; j < d_len; j++) {
+          if (this.nodes[i].document == data[j].id) {
+            this.documents.push(data[j]);
+            break;
+          }
+        }
+      }
     } else {
       this.documents = data;
     }

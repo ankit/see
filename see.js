@@ -203,6 +203,8 @@ See.prototype.visualizeEntity = function(anEntity) {
   this.draw();
   this.showBackButton();
   this.attachEscapeListener(this);
+  this.data.buildDocuments(this.datasets[this.selection.dataset].cache.documents, this.selection);
+  this.drawDocuments();
 }
 
 See.prototype.visualizeBiclusterConnections = function(d) {
@@ -231,7 +233,7 @@ See.prototype.openDocument = function(docName) {
   var len = docs.length;
   for (var i = 0; i < len; i++) {
     if (docs[i].id == docName) {
-      window.open("document.html?text=" + docs[i].text, docName, 'height=300, width=350');
+      window.open("document.html?text=" + unescape(docs[i].text), docName, 'height=300, width=350');
       return;
     }
   }
