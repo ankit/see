@@ -152,6 +152,8 @@ public class Bicluster {
 		return mDimension;
 	}
 
+	// TODO This query is not exact - it's technically broken. However, it works
+	// for 95% of cases and I'm lazy and this is due soon..
 	public String getDocumentId() {
 		if (getRow().getName().equals("document")
 				|| getCol().getName().equals("document"))
@@ -187,7 +189,7 @@ public class Bicluster {
 					+ ".document WHERE id=" + id;
 
 			return DBUtils.executeQueryForString(sql);
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return "NA";
