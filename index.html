@@ -9,19 +9,24 @@
 
     <script type="text/javascript" charset="utf-8" src="libs/jquery.js"></script>
     <script type="text/javascript" charset="utf-8" src="libs/jquery.event.drag.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="libs/tipsy/jquery.tipsy.js"></script>
 
     <script type="text/javascript" charset="utf-8" src="bicluster_node.js"></script>
     <script type="text/javascript" charset="utf-8" src="see.js"></script>
     <script type="text/javascript" charset="utf-8" src="data.js"></script>
     <link rel="stylesheet" href="see.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="libs/tipsy/tipsy.css" type="text/css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
     <div id="viz">
-      <div id="header" class="title"></div>
-      <button id="back-btn">
-        Go Back
-      </button>
-      <div id="editor">
+      <div id="header">
+        <div id="title">
+        </div>
+        <button id="back-btn">
+          Go Back
+        </button>
+      </div>
+      <div id="editor" class="block">
         <!-- <label>Dataset: </label>
         <select id="dataSelector">
         </select>
@@ -41,9 +46,11 @@
       </div>
     </div>
     <div id="left">
-      <div id="b-table-container">
+      <div id="entity-viewer" class="block">
       </div>
-      <div id="legend">
+      <div id="document-viewer" class="block">
+      </div>
+      <div id="legend" class="block">
       </div>
     </div>
     <div id="loading">

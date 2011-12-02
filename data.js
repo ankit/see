@@ -9,7 +9,7 @@ See.prototype.data = {
   documents: [],
 
   coord: {
-    x: 200,
+    x: 230,
     y: 150,
     dx: 280,
     dy: 300
@@ -23,7 +23,8 @@ See.prototype.data = {
       columnType: " Column Type",
       rows: " Array of Rows",
       columns: " Array of Columns",
-      weight: " Importance"
+      weight: " Importance",
+      documentId: " Doc Id"
     },
 
     chaining: {
@@ -66,7 +67,17 @@ See.prototype.data = {
   },
 
   buildDocuments: function(data, selection) {
-    //
+    if (selection.node) {
+      this.documents = [];
+      var len = data.length;
+      for (var i = 0; i < len; i++) {
+        if (data[i].id == selection.node.document)
+          this.documents.push(data[i]);
+      }
+    } else {
+      this.documents = data;
+    }
+    console.log(this.documents);
   },
 
   buildNodes: function(data, selection) {
@@ -136,12 +147,11 @@ See.prototype.data = {
         row[self.headers.mining.rows],
         row[self.headers.mining.columns],
         row[self.headers.mining.weight],
+        row[self.headers.mining.documentId],
         groupId));
 
       self.weights[row[self.headers.mining.id]] = row[self.headers.mining.weight];
     });
-
-    self.buildFoci(selection);
   },
 
   // Build focal points for visualization based on self.groups
@@ -151,29 +161,22 @@ See.prototype.data = {
 
     for (var i = 0; i < len; i ++) {
       var x = 0, y = 0;
+
       if (self.groups[i].childrenCount < 100) {
         x -= 100;
       }
 
-      if (selection.entityType === "all") {
-        if (i < 10) {
-          x += self.coord.x + (80 * i);
-          y += self.coord.y;
-        }
-        else {
-          x += self.coord.x + (80 * (i - 10));
-          y += self.coord.y + self.coord.dy - 100;
-        }
+      if (i < 4) {
+        x += self.coord.x + (self.coord.dx * i);
+        y += self.coord.y;
+      }
+      else if (i < 8) {
+        x += self.coord.x + (self.coord.dx * (i - 3));
+        y += self.coord.y + self.coord.dy;
       }
       else {
-        if (i < 4) {
-          x += self.coord.x + (self.coord.dx * i);
-          y += self.coord.y;
-        }
-        else {
-          x += self.coord.x + (self.coord.dx * (i - 3));
-          y += self.coord.y + self.coord.dy;
-        }
+        x += self.coord.x + (self.coord.dx * (i - 7));
+        y += self.coord.y + (2 * self.coord.dy);
       }
 
       self.foci.push({
@@ -265,6 +268,7 @@ See.prototype.data = {
           link[linkedBiclusterHeader.rows],
           link[linkedBiclusterHeader.columns],
           self.weights[link[linkedBiclusterHeader.id]],
+          null,
           groupId);
 
         newNode.cWeight = self.connectionStrength(selection.node, newNode)
