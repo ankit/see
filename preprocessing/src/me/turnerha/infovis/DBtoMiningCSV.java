@@ -62,7 +62,7 @@ public class DBtoMiningCSV {
 		try {
 			PrintWriter writer = new PrintWriter(new File("mining.csv"));
 			writer.println("BiCluster Id, Row Type, Array of Rows, "
-					+ "Column Type, Array of Columns, Importance");
+					+ "Column Type, Array of Columns, Importance, Doc Id");
 
 			for (Bicluster c : Bicluster.getAllBiclusters()) {
 				// ID
@@ -95,8 +95,10 @@ public class DBtoMiningCSV {
 				// http://stackoverflow.com/questions/5294955/how-to-scale-down-a-range-of-numbers-with-a-known-min-and-max-value
 				double normalized = (score - min) / (max - min);
 
-				writer.printf("%.20f\n", normalized);
-				System.out.printf("%.20f,", normalized);
+				writer.printf("%.20f", normalized);
+				
+				// Document ID
+				writer.print("," + c.getDocumentId() + "\n");
 			}
 
 			writer.flush();

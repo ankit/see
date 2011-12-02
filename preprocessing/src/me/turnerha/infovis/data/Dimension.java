@@ -82,4 +82,29 @@ public class Dimension {
 
 		return values;
 	}
+	
+	public String getOriginalIDs() {
+		String idTable = isRow ? "mining_bi_cluster_row"
+				: "mining_bi_cluster_col";
+		String selection = isRow ? "row_id" : "col_id";
+
+		// Grab the row ID's of all our values from mining_bi_cluster_row
+		ResultSet rs = DBUtils.executeQuery("SELECT " + selection + " FROM "
+				+ DBUtils.SYMFONY + "." + idTable + " WHERE bicluser_id="
+				+ parentBicluster);
+
+		StringBuffer idINlist = new StringBuffer();
+		try {
+			while (rs.next()) {
+				idINlist.append(rs.getString(1));
+				idINlist.append(',');
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		idINlist.setLength(idINlist.length() - 1);
+		
+		return idINlist.toString();
+	}
+
 }

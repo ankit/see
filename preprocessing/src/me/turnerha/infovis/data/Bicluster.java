@@ -152,6 +152,48 @@ public class Bicluster {
 		return mDimension;
 	}
 
+	public String getDocumentId() {
+		if (getRow().getName().equals("document")
+				|| getCol().getName().equals("document"))
+			return "NA";
+
+		// Grab external table name
+		String subsql = "SELECT config_id FROM " + DBUtils.SYMFONY
+				+ ".mining_bi_cluster WHERE id=" + bicluster_id;
+		String sql = "SELECT table_axb," + "table_axb_table_a_id_field,"
+				+ "table_axb_table_b_id_field FROM " + DBUtils.SYMFONY
+				+ ".project_config WHERE id=(" + subsql + ")";
+		ResultSet rs = DBUtils.executeQuery(sql);
+
+		// Grab all ID's
+		String rids = getRow().getOriginalIDs();
+		String cids = getCol().getOriginalIDs();
+
+		// Grab the row and col name
+		try {
+			rs.next();
+			String table = rs.getString("table_axb");
+			String row = rs.getString("table_axb_table_a_id_field");
+			String col = rs.getString("table_axb_table_b_id_field");
+
+			sql = "SELECT doc_id FROM " + getExternalDatabase() + "." + table
+					+ " WHERE " + row + " IN (" + rids + ") AND " + col
+					+ " IN (" + cids
+					+ ") GROUP BY doc_id ORDER BY COUNT(doc_id) DESC LIMIT 1";
+
+			String id = DBUtils.executeQueryForString(sql);
+
+			sql = "SELECT name FROM " + getExternalDatabase()
+					+ ".document WHERE id=" + id;
+
+			return DBUtils.executeQueryForString(sql);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "NA";
+		}
+	}
+
 	protected String getExternalDatabase() {
 		if (externalDbName != null)
 			return externalDbName;
