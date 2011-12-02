@@ -3,6 +3,8 @@
 jig = open('AtlanticStorm.jig','r')
 csv = open('AS_documents.csv','w')
 
+csv.write('id,text\n')
+
 last_doc_id = -1
 
 for line in jig:
