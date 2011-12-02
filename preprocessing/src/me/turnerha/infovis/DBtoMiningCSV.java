@@ -112,9 +112,9 @@ public class DBtoMiningCSV {
 
 		for (Bicluster bc : clusters)
 			if (bc.getCol().getValues().remove("USA")
-					|| bc.getRow().getValues().remove("USA")
-					|| bc.getCol().getValues().remove("FBI")
-					|| bc.getRow().getValues().remove("FBI")) {
+					| bc.getRow().getValues().remove("USA")
+					| bc.getCol().getValues().remove("FBI")
+					| bc.getRow().getValues().remove("FBI")) {
 				ArrayList<Link> toBeRemoved = new ArrayList<Link>();
 				for (Link l : bc.getAllLinks())
 					if (l.isLinkValid() == false)
