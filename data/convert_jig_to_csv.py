@@ -1,7 +1,7 @@
 
 
 jig = open('AtlanticStorm.jig','r')
-csv = open('AS_documents.csv','w')
+csv = open('atlanticstorm_documents.csv','w')
 
 csv.write('id,text\n')
 
