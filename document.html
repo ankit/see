@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <title></title>
+    <script type="text/javascript" charset="utf-8" src="libs/jquery.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $('body').html(getParameterByName('text'));
+    });
+
+    // http://stackoverflow.com/questions/901115/get-query-string-values-in-javascript
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+      var regexS = "[\\?&]" + name + "=([^&#]*)";
+      var regex = new RegExp(regexS);
+      var results = regex.exec(window.location.href);
+      if(results == null)
+        return "";
+      else
+        return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

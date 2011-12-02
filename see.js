@@ -101,6 +101,7 @@ See.prototype.birth = function() {
 
   this.attachListeners();
   this.visualizeDataset("atlanticstorm");
+  this.buildTooltips();
 }
 
 See.prototype.reset = function() {
@@ -184,11 +185,11 @@ See.prototype.visualizeEntityType = function(anEntityType) {
     d3.csv(self.rootUrl + "data/" + self.selection.dataset + "_documents.csv", function(d) {
       cache.documents = d;
       self.data.buildDocuments(d, self.selection);
-      self.drawDocs();
+      self.drawDocuments();
     });
   } else {
-    self.data.buildDocuments(cache.documents);
-    self.drawDocs();
+    self.data.buildDocuments(cache.documents, self.selection);
+    self.drawDocuments();
   }
 }
 
@@ -219,15 +220,32 @@ See.prototype.hideLoading = function() {
 }
 
 See.prototype.header = function(text) {
-  $("#header").text(text);
+  $("#title").text(text);
 }
 
+See.prototype.openDocument = function(docName) {
+  var self = this;
+  var docs = self.datasets[self.selection.dataset].cache.documents;
+  if (!docs)
+    return;
+  var len = docs.length;
+  for (var i = 0; i < len; i++) {
+    if (docs[i].id == docName) {
+      window.open("document.html?text=" + docs[i].text, docName, 'height=300, width=350');
+      return;
+    }
+  }
+}
+
+// changes the environment drawing parameters based on number of nodes
+// work in progress
 See.prototype.updateDrawEnvironment = function() {
+  console.log(this.data.nodes.length);
   if (this.data.nodes.length <= 100) {
     this.props.charge = -200;
     this.props.r = d3.scale.sqrt().domain([0, 1000]).range([4, 120]);
-    this.data.coord.x = 200;
-    this.data.coord.y = 300;
+    this.data.coord.x = 400;
+    this.data.coord.y = 250;
     this.data.coord.dx = 200;
     this.data.coord.dy = 250;
     this.props.gravity = 0.1;
@@ -235,7 +253,7 @@ See.prototype.updateDrawEnvironment = function() {
   else if (this.data.nodes.length > 100 && this.data.nodes.length < 500) {
     this.props.charge = -40;
     this.props.r = d3.scale.sqrt().domain([0, 1000]).range([1.8, 60]);
-    this.data.coord.x = 200;
+    this.data.coord.x = 350;
     this.data.coord.y = 250;
     this.data.coord.dx = 200;
     this.data.coord.dy = 250;
@@ -244,21 +262,23 @@ See.prototype.updateDrawEnvironment = function() {
   else if (this.data.nodes.length >= 500 && this.data.nodes.length < 1000) {
     this.props.charge = -30;
     this.props.r = d3.scale.sqrt().domain([0, 1000]).range([1.5, 100]);
-    this.data.coord.x = 300;
-    this.data.coord.y = 180;
-    this.data.coord.dx = 200;
-    this.data.coord.dy = 250;
+    this.data.coord.x = 400;
+    this.data.coord.y = 300;
+    this.data.coord.dx = 100;
+    this.data.coord.dy = 100;
     this.props.gravity = 0.1;
    }
    else if (this.data.nodes.length >= 1000) {
      this.props.charge = -20;
      this.props.r = d3.scale.sqrt().domain([0, 1000]).range([1.2, 100]);
-     this.data.coord.x = 200;
-     this.data.coord.y = 350;
-     this.data.coord.dx = 250;
+     this.data.coord.x = 250;
+     this.data.coord.y = 250;
+     this.data.coord.dx = 80;
      this.data.coord.dy = 100;
      this.props.gravity = 0.3;
    }
+
+   this.data.buildFoci(this.selection);
 }
 
 // Drawing
@@ -436,8 +456,14 @@ See.prototype.drawEditor = function() {
   }
 }
 
-See.prototype.drawDocs = function() {
-
+See.prototype.drawDocuments = function() {
+  var len = this.data.documents.length;
+  var html = "";
+  for (var i = 0; i < len; i++) {
+    html += "<a rel='tipsy' title='Open " + this.data.documents[i].id + "' class='document'>" + this.data.documents[i].id + "</a>";
+  }
+  $("#document-viewer").html(html);
+  this.buildTooltips();
 }
 
 See.prototype.drawLegend = function() {
@@ -458,6 +484,12 @@ See.prototype.drawLabel = function(keyIndex, group) {
   $("#legend").append(html);
 }
 
+See.prototype.buildTooltips = function() {
+  $('[rel=tipsy]').tipsy({
+    gravity: 'w'
+  });
+}
+
 // Events
 See.prototype.onNodeClick = function(d, node) {
   var self = this;
@@ -467,6 +499,8 @@ See.prototype.onNodeClick = function(d, node) {
     self.deselectNode(circle);
   else
     self.selectNode(d, circle);
+  self.data.buildDocuments(self.datasets[self.selection.dataset].cache.documents, self.selection);
+  self.drawDocuments();
 }
 
 See.prototype.onNodeDoubleClick = function(d, node) {
@@ -557,9 +591,13 @@ See.prototype.attachListeners = function() {
     self.visualizeEntity($("#search").val());
   });
 
-  // attach a live listener for entity names
+  // attach live listeners for entities and documents
   $(".entityName").live("click", function(e) {
     self.visualizeEntity(this.innerText);
+  });
+
+  $(".document").live("click", function(e) {
+    self.openDocument(this.innerText);
   });
 }
 
@@ -571,31 +609,20 @@ See.prototype.detachEscapeListener = function(self) {
   $(document).unbind('keydown', self.onEscape);
 }
 
-// Initialize and create the DIV which will contain selected bicluster(s) content
-See.prototype.initDetailView = function() {
-  return d3.select("#b-table-container")
-  .append("div")
-  .attr("id", "detail-view")
-  .attr("class", "b-table");
-}
-
 // Shows the contents of a bicluster in a tabular layout
 See.prototype.showDetailView = function(d) {
   var self = this;
-  var detailView = d3.select("#detail-view");
 
-  // selections in d3 are of the form [[node]]
-  if (!detailView[0][0])
-    detailView = self.initDetailView();
-
-  detailView
+  d3.select("#entity-viewer")
   .style("display", "block")
   .html(self.biclusterHTML(d));
+
+  self.buildTooltips();
 }
 
 // Hides the contents of bicluster(s)
 See.prototype.hideDetailView = function() {
-  d3.select("#detail-view")
+  d3.select("#entity-viewer")
   .style("display", "none");
 }
 
@@ -603,9 +630,10 @@ See.prototype.hideDetailView = function() {
 See.prototype.showConnectionView = function(d) {
   var self = this;
 
-  d3.select("#detail-view")
+  d3.select("#entity-viewer")
   .html(self.biclusterConnectionHTML(self.selection.node, d))
   .style("display", "block");
+  self.buildTooltips();
 }
 
 See.prototype.showBackButton = function() {
@@ -773,12 +801,12 @@ See.prototype.biclusterHTML = function(d) {
 // Returns a <td> row for an entity
 See.prototype.biclusterEntityHTML = function(value, isCommon, isNew) {
   if (value) {
-    var html = "<td class='entityName"
+    var html = "<td rel='tipsy' class='entityName"
     if (isNew)
       html += " highlighted"
     else if (isCommon)
       html += " common"
-    html += "' title='Click to view biclusters containing " + value +"'>" + value + "</td>";
+    html += "' title='View " + value +" biclusters'>" + value + "</td>";
     return html;
   }
   else
