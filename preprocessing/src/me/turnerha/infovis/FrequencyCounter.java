@@ -28,8 +28,6 @@ public class FrequencyCounter {
 			
 			out.write("\"key\",\"value\"\n");
 			for (String key : counter.keySet()) {
-				if (key.equals("USA"))
-					System.out.println("wha?");
 				out.write("\"" + key + "\",\"");
 				out.write("" + counter.get(key) + "\"\n");
 			}

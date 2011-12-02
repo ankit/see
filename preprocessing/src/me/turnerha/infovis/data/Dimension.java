@@ -82,7 +82,7 @@ public class Dimension {
 
 		return values;
 	}
-	
+
 	public String getOriginalIDs() {
 		String idTable = isRow ? "mining_bi_cluster_row"
 				: "mining_bi_cluster_col";
@@ -103,7 +103,7 @@ public class Dimension {
 			e.printStackTrace();
 		}
 		idINlist.setLength(idINlist.length() - 1);
-		
+
 		return idINlist.toString();
 	}
 

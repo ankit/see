@@ -2,8 +2,10 @@ package me.turnerha.infovis;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import me.turnerha.infovis.data.Bicluster;
 import me.turnerha.infovis.data.Link;
@@ -21,11 +23,12 @@ import edu.uci.ics.jung.graph.util.EdgeType;
 public class DBtoMiningCSV {
 
 	public static void main(String[] args) {
-		long start = System.currentTimeMillis();
 		UndirectedSparseGraph<Integer, Integer> graph = new UndirectedSparseGraph<Integer, Integer>();
 
+		List<Bicluster> clusters = removeNoisyElements();
+
 		int linkID = 0;
-		for (Bicluster bc : Bicluster.getAllBiclusters()) {
+		for (Bicluster bc : clusters) {
 			graph.addVertex(bc.getBiclusterId());
 			for (Link link : bc.getAllLinks()) {
 				graph
@@ -35,22 +38,13 @@ public class DBtoMiningCSV {
 			}
 		}
 
-		long create = System.currentTimeMillis() - start;
-		start = System.currentTimeMillis();
-
 		BetweennessCentrality<Integer, Integer> centrality = new BetweennessCentrality<Integer, Integer>(
 				graph);
 
-		// bc.printRankings(false, true);
 		centrality.setRemoveRankScoresOnFinalize(false);
 		centrality.evaluate();
 
-		// for (Bicluster c : Bicluster.getAllBiclusters())
-		// System.out.println("BetweennessCentrality for\t"
-		// + c.getBiclusterId() + "\t"
-		// + bc.getVertexRankScore(c.getBiclusterId()));
-
-		final double N = Bicluster.getAllBiclusters().size();
+		final double N = clusters.size();
 		final double scaleFactor = (N - 1) * (N - 2) / 2.0;
 
 		Collection<Number> values = centrality.getVertexRankScores(
@@ -64,7 +58,7 @@ public class DBtoMiningCSV {
 			writer.println("BiCluster Id, Row Type, Array of Rows, "
 					+ "Column Type, Array of Columns, Importance, Doc Id");
 
-			for (Bicluster c : Bicluster.getAllBiclusters()) {
+			for (Bicluster c : clusters) {
 				// ID
 				writer.print(c.getBiclusterId());
 				writer.append(',');
@@ -96,7 +90,7 @@ public class DBtoMiningCSV {
 				double normalized = (score - min) / (max - min);
 
 				writer.printf("%.20f", normalized);
-				
+
 				// Document ID
 				writer.print("," + c.getDocumentId() + "\n");
 			}
@@ -113,4 +107,30 @@ public class DBtoMiningCSV {
 
 	}
 
+	public static List<Bicluster> removeNoisyElements() {
+		List<Bicluster> clusters = Bicluster.getAllBiclusters();
+
+		for (Bicluster bc : clusters)
+			if (bc.getCol().getValues().remove("USA")
+					|| bc.getRow().getValues().remove("USA")
+					|| bc.getCol().getValues().remove("FBI")
+					|| bc.getRow().getValues().remove("FBI")) {
+				ArrayList<Link> toBeRemoved = new ArrayList<Link>();
+				for (Link l : bc.getAllLinks())
+					if (l.isLinkValid() == false)
+						toBeRemoved.add(l);
+				bc.getAllLinks().removeAll(toBeRemoved);
+			}
+
+		List<Bicluster> toRemove = new ArrayList<Bicluster>();
+
+		for (Bicluster bc : clusters)
+			if (bc.getCol().getValues().size() == 0
+					|| bc.getRow().getValues().size() == 0)
+				toRemove.add(bc);
+
+		clusters.removeAll(toRemove);
+
+		return clusters;
+	}
 }

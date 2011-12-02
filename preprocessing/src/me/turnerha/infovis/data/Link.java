@@ -63,8 +63,10 @@ public class Link {
 			throw new IllegalStateException(
 					"Coeff does not make sense on overlapped biclusters");
 
-		if (coeff != -1.0)
-			return coeff;
+		// Works in general, but breaks the "remove noisy nodes" in
+		// DBtoMiningCSV
+		// if (coeff != -1.0)
+		// return coeff;
 
 		Bicluster target = getTarget();
 		Bicluster dest = getDestination();
@@ -81,6 +83,28 @@ public class Link {
 
 		coeff = intersecton / union;
 		return coeff;
+	}
+
+	// This is only useful if the underlying values may have been changed. It
+	// essentially checks if this link still means anything - are there still
+	// elements that are common to both target and destination?
+	public boolean isLinkValid() {
+		Bicluster target = getTarget();
+		Bicluster dest = getDestination();
+
+		ArrayList<String> tVals = new ArrayList<String>(target.getCol()
+				.getValues());
+		tVals.addAll(target.getRow().getValues());
+
+		ArrayList<String> dVals = new ArrayList<String>(dest.getCol()
+				.getValues());
+		dVals.addAll(dest.getRow().getValues());
+
+		for (String s : tVals)
+			if (dVals.contains(s))
+				return true;
+
+		return false;
 	}
 
 	public boolean isConnectionLink() {
