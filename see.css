@@ -81,9 +81,16 @@ th {
   width: 90%;
 }
 
+#backButton {
+  left: 20px;
+  top: 55px;
+  position: absolute;
+  display: none;
+}
+
 .title {
   color: #ccc;
-  font-size: 24px;
+  font-size: 15px;
   text-transform: capitalize;
 }
 
