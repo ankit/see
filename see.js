@@ -248,6 +248,10 @@ See.prototype.openDocument = function(docName) {
         window.open("document.html?text=" + unescape(docs[i].text) + "&entities=" + self.selection.node.rows.join(",") + "," + self.selection.node.columns.join(","), docName, 'height='+h+', width='+w+', left='+l);
       }
 
+      else if (self.selection.entityName) {
+        window.open("document.html?text=" + unescape(docs[i].text) + "&entity=" + self.selection.entityName, docName, 'height='+h+', width='+w+', left='+l);
+      }
+
       else {
         window.open("document.html?text=" + unescape(docs[i].text), docName, 'height='+h+', width='+w+', left='+l);
       }

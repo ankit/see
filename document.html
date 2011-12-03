@@ -16,12 +16,15 @@
     $(document).ready(function() {
       $('body').html(getParameterByName('text'));
       var entities = getParameterByName('entities');
+      var entity = getParameterByName('entity');
       if (entities !== "") {
         entities = entities.split(",");
         var len = entities.length;
         for (var i = 0; i < len; i++) {
           $('body').highlight(entities[i]);
         }
+      } else if (entity !== "") {
+        $('body').highlight(entity);
       }
     });
 
