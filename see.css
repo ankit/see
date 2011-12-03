@@ -136,29 +136,52 @@ th {
 }
 
 #back-btn {
-  display: inline-block;
-  margin-left: 20px;
+  margin-top: 20px;
   display: none;
 }
 
 #title {
   color: #555;
   display: inline-block;
-  font-size: 15px;
+  font-size: 17px;
+  padding: 10px 0;
   text-transform: capitalize;
+}
+
+#search-history {
+  margin-top: 5px;
+}
+
+.search {
+  display: block;
+}
+
+.search a {
+  padding: 1px 5px 3px 5px;
+  color: #555;
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11px;
+}
+
+.search a:hover {
+  background-color: #888;
+  color: #fff;
+  cursor: pointer;
 }
 
 #editor {
   position: absolute;
   right: 0;
   margin-right: 5px;
-  width: 180px;
+  width: 200px;
   cursor: move;
+  color: #333;
+  font-size: 12px;
 }
 
 #editor label {
-  color: #333;
-  font-size: 12px;
   width: 200px;
 }
 
@@ -167,15 +190,14 @@ th {
 }
 
 #viz {
-  height: 100%;
+  height: 120%;
   clear: both;
   overflow: auto;
-  height: 100%;
 }
 
 #footer {
   color: #555;
-  margin-top: -20px;
+  margin-top: 10px;
   font-size: 11px;
   padding-bottom: 20px;
   text-align: center;

@@ -191,6 +191,7 @@ See.prototype.visualizeEntityType = function(anEntityType) {
     self.data.buildDocuments(cache.documents, self.selection);
     self.drawDocuments();
   }
+  self.buildTooltips();
 }
 
 See.prototype.visualizeEntity = function(anEntity) {
@@ -205,6 +206,8 @@ See.prototype.visualizeEntity = function(anEntity) {
   this.attachEscapeListener(this);
   this.data.buildDocuments(this.datasets[this.selection.dataset].cache.documents, this.selection);
   this.drawDocuments();
+  this.history.add(anEntity);
+  this.buildTooltips();
 }
 
 See.prototype.visualizeBiclusterConnections = function(d) {
@@ -271,9 +274,9 @@ See.prototype.updateDrawEnvironment = function() {
     this.props.gravity = 0.1;
    }
    else if (this.data.nodes.length >= 1000) {
-     this.props.charge = -20;
+     this.props.charge = -30;
      this.props.r = d3.scale.sqrt().domain([0, 1000]).range([1.2, 100]);
-     this.data.coord.x = 250;
+     this.data.coord.x = 350;
      this.data.coord.y = 250;
      this.data.coord.dx = 80;
      this.data.coord.dy = 100;
@@ -447,6 +450,7 @@ See.prototype.drawEditor = function() {
     // attach event to entity search box
     $("#search").bind("change", function(e) {
       self.visualizeEntity(this.value);
+      $(this).attr("value", "");
     });
 
     // // add the data sets. they only need to intialized once
@@ -461,11 +465,10 @@ See.prototype.drawEditor = function() {
 See.prototype.drawDocuments = function() {
   var len = this.data.documents.length;
   var html = "";
-  for (var i = 0; i < len; i++) {
+  for (var i = 0; i < len; i ++) {
     html += "<a rel='tipsy' title='Open " + this.data.documents[i].id + "' class='document'>" + this.data.documents[i].id + "</a>";
   }
   $("#document-viewer").html(html);
-  this.buildTooltips();
 }
 
 See.prototype.drawLegend = function() {
@@ -490,6 +493,9 @@ See.prototype.buildTooltips = function() {
   $('[rel=tipsy]').tipsy({
     gravity: 'w'
   });
+  $('[rel=tipsy-left]').tipsy({
+    gravity: 'e'
+  });
 }
 
 // Events
@@ -503,6 +509,7 @@ See.prototype.onNodeClick = function(d, node) {
     self.selectNode(d, circle);
   self.data.buildDocuments(self.datasets[self.selection.dataset].cache.documents, self.selection);
   self.drawDocuments();
+  self.buildTooltips();
 }
 
 See.prototype.onNodeDoubleClick = function(d, node) {
@@ -601,6 +608,14 @@ See.prototype.attachListeners = function() {
   $(".document").live("click", function(e) {
     self.openDocument(this.innerText);
   });
+
+  $(".search-query").live("click", function(e) {
+    self.visualizeEntity(this.innerText);
+  });
+
+  $(".search-close-btn").live("click", function(e) {
+    self.history.remove($(this).prev('.search-query').text());
+  })
 }
 
 See.prototype.attachEscapeListener = function(self) {
@@ -808,7 +823,7 @@ See.prototype.biclusterEntityHTML = function(value, isCommon, isNew) {
       html += " highlighted"
     else if (isCommon)
       html += " common"
-    html += "' title='View " + value +" biclusters'>" + value + "</td>";
+    html += "' title='Show " + value +" biclusters'>" + value + "</td>";
     return html;
   }
   else

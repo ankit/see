@@ -14,6 +14,7 @@
     <script type="text/javascript" charset="utf-8" src="bicluster_node.js"></script>
     <script type="text/javascript" charset="utf-8" src="see.js"></script>
     <script type="text/javascript" charset="utf-8" src="data.js"></script>
+    <script type="text/javascript" charset="utf-8" src="history.js"></script>
     <link rel="stylesheet" href="see.css" type="text/css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="libs/tipsy/tipsy.css" type="text/css" media="screen" title="no title" charset="utf-8">
   </head>
@@ -22,9 +23,6 @@
       <div id="header">
         <div id="title">
         </div>
-        <button id="back-btn">
-          Go Back
-        </button>
       </div>
       <div id="editor" class="block">
         <!-- <label>Dataset: </label>
@@ -38,11 +36,16 @@
         <label>Search Entity:</label>
         <input type="search" id="search" />
         <button id="search-btn">Go</button>
-        <br><br>
+        <div id="search-history">
+        </div>
+        <br>
         <label>Visible Entity Types: </label>
         <br><br>
         <div id="filters">
         </div>
+        <button id="back-btn">
+          Go Back
+        </button>
       </div>
     </div>
     <div id="left">
