@@ -1,11 +1,28 @@
 <!doctype html>
 <html>
   <head>
-    <title></title>
+    <style>
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 15px;
+      }
+      .highlight { background-color: yellow }
+    </style>
+
     <script type="text/javascript" charset="utf-8" src="libs/jquery.js"></script>
+    <script type="text/javascript" charset="utf-8" src="libs/jquery.highlight.js"></script>
     <script type="text/javascript">
+
     $(document).ready(function() {
       $('body').html(getParameterByName('text'));
+      var entities = getParameterByName('entities');
+      if (entities !== "") {
+        entities = entities.split(",");
+        var len = entities.length;
+        for (var i = 0; i < len; i++) {
+          $('body').highlight(entities[i]);
+        }
+      }
     });
 
     // http://stackoverflow.com/questions/901115/get-query-string-values-in-javascript
@@ -20,12 +37,6 @@
         return decodeURIComponent(results[1].replace(/\+/g, " "));
     }
     </script>
-    <style>
-      body {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-size: 15px;
-      }
-    </style>
   </head>
   <body>
   </body>

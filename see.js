@@ -235,8 +235,23 @@ See.prototype.openDocument = function(docName) {
     return;
   var len = docs.length;
   for (var i = 0; i < len; i++) {
+    var w = 550;
+    var h = 300;
+    var l = 500;
     if (docs[i].id == docName) {
-      window.open("document.html?text=" + unescape(docs[i].text), docName, 'height=300, width=350');
+      if (window.screen) {
+        w = window.screen.availWidth * 0.4;
+        l = window.screen.availWidth * 0.6;
+      }
+
+      if (self.selection.node) {
+        window.open("document.html?text=" + unescape(docs[i].text) + "&entities=" + self.selection.node.rows.join(",") + "," + self.selection.node.columns.join(","), docName, 'height='+h+', width='+w+', left='+l);
+      }
+
+      else {
+        window.open("document.html?text=" + unescape(docs[i].text), docName, 'height='+h+', width='+w+', left='+l);
+      }
+
       return;
     }
   }
