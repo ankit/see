@@ -84,7 +84,8 @@ var See = function() {
     fadeDuration: 500,
     linkDistance: 50,
     charge: -20,
-    gravity: 0.1
+    gravity: 0.1,
+    minNodeRadius: 3
   };
 }
 
@@ -294,7 +295,7 @@ See.prototype.updateDrawEnvironment = function() {
    }
    else if (this.data.nodes.length >= 1000) {
      this.props.charge = -30;
-     this.props.r = d3.scale.sqrt().domain([0, 1000]).range([1.2, 100]);
+     this.props.r = d3.scale.sqrt().domain([0, 1000]).range([2, 100]);
      this.data.coord.x = 350;
      this.data.coord.y = 250;
      this.data.coord.dx = 80;
@@ -349,7 +350,7 @@ See.prototype.draw = function() {
   d3.selectAll(".circle")
     .data(self.data.nodes)
     .attr("r", function(d) {
-      return self.props.r(parseFloat(d.dWeight) * 100) || 5; } )
+      return Math.max(self.props.r(parseFloat(d.dWeight) * 100), self.props.minNodeRadius); } )
     .style("fill", function(d) {
       return d3.rgb(self.props.fill(d.group)).brighter(1); } )
     .style("stroke", function(d) {
@@ -374,7 +375,7 @@ See.prototype.drawCircle = function(node, self) {
   node.append("svg:circle")
   .attr("class", "circle")
   .attr("r", function(d) {
-    return self.props.r(parseFloat(d.dWeight) * 100) || 5
+    return Math.max(self.props.r(parseFloat(d.dWeight) * 100), self.props.minNodeRadius);
   })
   .style("fill", function(d) {
     return d3.rgb(self.props.fill(d.group)).brighter(1);
