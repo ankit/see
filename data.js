@@ -134,9 +134,7 @@ See.prototype.data = {
       var groupsLength = self.groups.length;
 
       for (var j = 0; j < groupsLength; j ++) {
-        var group = self.groups[j];
-
-        if (self.doesRowBelongToGroup(row, group)) {
+        if (self.doesRowBelongToGroup(row, self.groups[j])) {
           wasGroupFound = true;
           groupId = j;
           break;
@@ -149,9 +147,10 @@ See.prototype.data = {
           columnType: row[self.headers.mining.columnType],
           childrenCount: 0
         });
+        groupId = self.groups.length - 1;
       }
 
-      self.groups[j].childrenCount ++;
+      self.groups[groupId].childrenCount ++;
 
       self.nodes.push(new BiclusterNode(row[self.headers.mining.id],
         row[self.headers.mining.rowType],
